@@ -1,0 +1,14 @@
+    Child* tail(Parent *p);
+    Child* head(Parent *p);
+    void addHead(Parent *p, Child *c);
+    void addTail(Parent *p, Child *c);
+    void append(Parent *p,Child *c1, Child *c2);
+    void insert(Child *c1, Child *c2);
+    void remove(Parent *p, Child *c);
+    Child* next(Parent *p, Child *c);
+    Child* prev(Parent *p, Child *c);
+    Child* nextRing(Child *c);
+    Child* prevRing(Child *c);
+    void sort(ZZsortFun cmpFun, Parent *p);
+    void merge(Child *s,Child *t,Parent *p); // merges or splits
+    void setTail(Parent* p,Child* c,int check);

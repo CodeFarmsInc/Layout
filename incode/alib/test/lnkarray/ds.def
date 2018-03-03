@@ -1,0 +1,7 @@
+
+DataStructure Ring1<Employee> eRing;
+DataStructure Name<Employee> eName;
+DataStructure SingleLink<Header,Employee> rStart;
+DataStructure Array<Header,Employee*> pArr;
+DataStructure Array<Header,Employee>  oArr;
+DataStructure LinkArray<Header,Employee>  hArr;

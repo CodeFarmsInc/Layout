@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML'
+         timestamp = '1096220808'
+  <XMI.header>
+    <XMI.documentation>
+      <XMI.exporter>CentralControl</XMI.exporter>
+      <XMI.exporterVersion>1.0</XMI.exporterVersion>
+    </XMI.documentation>
+  </XMI.header>
+  <XMI.content>
+    <UML:Model xmi.id = 'jLib:projectID:1000'
+      name = 'jLib:projectID' isSpecification = 'false'
+      isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+      <UML:Namespace.jLib_UML>      </UML:Namespace.jLib_UML>
+    </UML:Model>
+  </XMI.content>
+</XMI>

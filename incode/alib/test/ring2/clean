@@ -1,0 +1,7 @@
+#!/bin/sh
+rm ring2.res
+rm gen.*
+rm tmp/*.cpp
+rm tmp/*.h
+rm *.o
+rm a.out

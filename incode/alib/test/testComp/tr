@@ -1,0 +1,6 @@
+#!/bin/sh
+./clean
+ls testComp.h > srcList
+../../codegen -uml ds.def ../../lib gen srcList umlFile
+cp layout.inp testComp.res
+../diff testComp.res testComp.out

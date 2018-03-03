@@ -1,0 +1,1834 @@
+<HTML>
+<HEAD>
+<Title> Tutorial for the C++ version </TITLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE>
+
+<font size="4">
+<A HREF="index.html">    [homePage] </A>
+<A HREF="doc.htm">   - [docum] </A>
+<A HREF="src.htm">   - [source] </A>
+<A HREF="test.htm">  - [testing] </A>
+<A HREF="exper.htm"> - [experience] </A>
+<hr>
+<font size="4">
+<B>
+
+<H1> Tutorial for the C++ version </H1>
+If you are reading this document for the first time, we recommend you to 
+continue straight through. If you have already
+done that, you can jump directly to the section of your interest:
+<UL>
+<LI><A HREF="#PART1">Bottom-up design style</A>
+<LI><A HREF="#PART2">Top-down design style</A>
+<LI><A HREF="#PART3">The data structure library</A>
+  <UL>
+    <LI><A HREF="#3_1">- adding a new association to the library</A>
+    <LI><A HREF="#3_2">- deriving a new association from another class</A>
+    <LI><A HREF="#3_3">- ... as a wrapper of an STL container</A>
+    <LI><A HREF="#3_4">- expanding STL container to bi-directional association</A>
+  </UL>
+</UL>
+<p>
+You will see how, with the library of associations (alib), you can 
+develop software in two
+different styles: 
+<UL>
+<LI>In the bottom-up approach, you evolve the code right from the beginning, but
+your data structures (relations, associations) are controlled
+by a short textual description (schema) which is inside your code.
+With every compilation, you automatically get a UML class diagram.
+<LI>In the top-down approach, you first evolve the UML model. The
+coding begins much later on when the conceptual design (software architecture)
+has been well thought through. When you edit the UML diagram, you
+do not(!) manipulate it in a graphical environment. Instead, you edit 
+a short textual UML description (schema), and the diagram
+is re-drawn automatically.
+</UL>
+In either case you eventually reach the stage when you must evolve both
+the code and the model simultaenously, and the IN_CODE modelling
+helps you to do that in the most elegant and simple manner.
+<p>
+Note that regardless whether you use the bottom-up or the top-down approach,
+your design is model driven (MDA=Model Driven Architecture). The difference
+from other existing UML tools is that, in our case, the model is an integral
+part of your code. Other tools assume that the model is an independent
+entity which exists outside of your code.
+<p>
+The idea which leads to this tight integration
+is to implement all data structures and relations
+as <I>associations</I> and not as <I>containers</I> used by practically
+all existing class libraries including the STL library.
+Associations involve a cooperation of two and possibly
+more classes, while in containers just one class controls another class
+(uni-directional relation).
+Also, associations include and
+naturally support intrusive data structures such as graphs,
+many-to-many, and various design patterns which cannot be implemented as
+containers. Intrusive data structures have significant advantages compared
+to array based containers: They allow superior protection against
+run-time errors, are generally faster, result in fewer objects being used,
+and jahve smaller footprint.
+<p>
+As you will see at the last section (Adding a new data
+structure to the library), any container is just a simple 
+association. After re-defining the interfaces, container libraries 
+including STL naturally fit into our library.
+
+<H2><A name="PART1"></A>PART 1: Example of the bottom-up approach</H2>
+
+Let's assume that we have a company with Employees who are organized into a
+hierarchy of Departments. Each Employee belongs to exactly one Department,
+and each Department has one Manager. Departments have ID numbers, and
+Employees have names.
+<p>
+You start with a skeleton of your classes, without -- and that is important --
+inserting into them any code related to the relations among them.
+Your *.h files (or a single file if you wish) will then be:
+<P>
+<pre>
+    class Employee {
+    public:
+<span style='color:blue'>        ZZ_Employee ZZds; // add mechanically to every class </span>
+        Employee(char *name);
+    };
+
+    class Manager : public Employee {
+    public:
+<span style='color:blue'>        ZZ_Manager ZZds; </span>
+        Manager(char *name) : Employee(name){}
+        Manager() : Employee(){}
+    };
+
+    class Department {
+        int deptNo;
+    public:
+<span style='color:blue'>        ZZ_Department ZZds; </span>
+        Department(int dNo){deptNo=dNo;}
+    };
+</pre>
+<p>
+Since you still do not know which classes are available from this library,
+I suggest
+that we implement our new data organization with the following associations
+(for more details see the description of all the available classes in 
+<A HREF="aClasses.doc">aClasses.doc</A>:
+<p>
+
+<div align='center'>
+<IMG SRC="ctut/ctut1.jpg" ALIGN="top">
+</div>
+<p>
+Since one of the purposes of alib is to eliminate pointers from the application
+classes, we strongly recommend that right from the beginning
+you use association Name for all the variable length strings:
+<pre>
+    class MyClass {
+        char *name1;  // usual style, not recommended
+        String name2; // usual style, not recommended
+        // ... some other stuff
+    };
+
+    // new, recommended way to code the same thing
+    class MyClass {  
+        // ... some other stuff
+    };
+
+    Association Name<MyClass> name1;
+    Association Name<MyClass> name2;
+</pre>    
+<p>
+Then, in a separate file, you declare the relations
+(associations) among your classes. Typically, this file has only a few lines
+(usually not more then 25 even for complex projects), one line for
+every relation. This file can have any name, but throughout this book and
+in most examples we'll call it ds.def (=data structure definition).
+This file will be a blueprint of your data organization like a datase schema
+and, as you will see, its format is very close to expressing the relations
+in plain English.
+<p>
+The library offers numerous data structures, but
+the initial choice isn't critical.
+It is easy to add, remove, or replace associations by changing a few lines
+in  ds.def. Besides other advantages, this is much faster
+than editing the UML diagram in a graphical environment.
+<p>
+The declaration of the associations (file ds.def) then is:
+<p>
+<pre>
+    // declare the relations (schema) one association per line
+<span style='color:red'>    Association LinkeList1&ltDepartment,Employee&gt empl;
+    Association LinkedList1&ltDepartment,Department&gt dHier; 
+    Association SingleLink&ltDepartment,Manager&gt boss;
+    Association Name&ltEmployee&gt eName; </span>
+</pre>
+<p>
+Using the methods which alib gives you for the associations, you can
+build and manipulate your data organization. Note that association
+which involve multiple objects provide iterators.
+Here is a complete program which builds a tree of several Departments
+and populates 
+it with people. Note how each association (data structure)
+has a name, which is then everywhere used as an identifier whenever
+you manipulate or access the particular data structure 
+(here: empl, dHier, boss, and eName). 
+
+<pre>
+    // ----------------------------------
+    //         *.h FILES OR FILE
+    // ----------------------------------
+
+    #include &ltiostream.h&gt
+<span style='color:green'>    #include "gen.h"</span>
+
+    // declaration of classes
+    class Employee {
+    public:
+<span style='color:blue'>        ZZ_Employee ZZds; // add mechanically to every class </span>
+        Employee(char *name);
+        Employee(){}
+        void prt();
+    };
+
+    class Manager : public Employee {
+    public:
+<span style='color:blue'>        ZZ_Manager ZZds; </span>
+        Manager(char *name) : Employee(name){}
+        Manager() : Employee(){}
+    };
+
+    class Department {
+        int deptNo;
+    public:
+<span style='color:blue'>        ZZ_Department ZZds; </span>
+        Department(int dNo){deptNo=dNo;}
+        void prt(int layer);
+        Department(){deptNo=0;}
+        void prt(int layer);       // recursive print
+        void prtSpaces(int layer); // formatting hierarchical print
+    };
+
+    // ----------------------------------
+
+    //         FILE ds.def
+    // ----------------------------------
+
+    // declare the relations (schema) one association per line
+<span style='color:red'>    Association LinkeList1&ltDepartment,Employee&gt empl;
+    Association LinkedList1&ltDepartment,Department&gt dHier; 
+    Association SingleLink&ltDepartment,Manager&gt boss;
+    Association Name&ltEmployee&gt eName; </span>
+
+
+    // ----------------------------------
+    //         *.cpp FILES OR FILE
+    // ----------------------------------
+
+    // implementation of all the methods to follow
+
+    Employee::Employee(char *name){eName::add(this,name);}
+
+    void Employee::prt(){cout << eName::get(this) << "\n";}
+
+    void Department::prtSpaces(int layer){
+        for(int i=0; i<layer; i++)cout << "   ";
+    }
+
+    // recursive print of departments and employees
+    void Department::prt(int layer){
+        // iterators are automatically provided
+        empl_Iterator eIter; 
+        dHier_Iterator hIter;
+        Department *d;
+        Employee *e;
+
+        prtSpaces(layer);
+        cout << "dept=" << deptNo << " manager=";
+        boss::fwd(this)->prt();
+
+        eIter.start(this); // start employee iterator
+        ITERATE(eIter,e){  // e walkes through all employees
+            prtSpaces(layer+1);
+            e->prt();
+        }
+       
+        hIter.start(this); // start employee iterator
+        ITERATE(hIter,d){  // d walkes through sub-departments
+            d->prt(layer+1);
+        }
+    }
+
+    // main program can already create and manipulate the data
+    int main(){
+        Employee *e; Manager *m; Department *d1,*d2,*d3,*d4,*d5;
+
+        d1=new Department(100);
+        m =new Manager("C.Black"); boss::add(d1,m);
+        
+        d2=new Department(110);    dHier::addTail(d1,d2);
+        m =new Manager("A.Green"); boss::add(d2,m);
+        e =new Employee("J.Fox");  empl::addTail(m,e); // <--- note1
+        e =new Employee("K.Doe");  empl::addTail(d2,e);
+
+        d3=new Department(120);    dHier::addTail(d1,d3);
+        m =new Manager("B.White"); boss::add(d3,m);
+
+        d4=new Department(111);        dHier::addTail(d2,d4);
+        m =new Manager("B.Brown");     boss::add(d4,m);
+        e =new Employee("S.Winter");   empl::addTail(d4,e);
+        e =new Employee("I.Springer"); empl::addTail(d4,e);
+        e =new Employee("B.Summers");  empl::addTail(d4,e);
+
+
+        d5=new Department(112);        dHier::addTail(d2,d5);
+        m =new Manager("G.Gray");      boss::add(d4,m); // <--- note2
+        e =new Employee("F.Beech");    empl::addTail(d5,e);
+        e =new Employee("H.Oats");     empl::addTail(d5,e);
+
+        // print the entire data by accessing its root, d1
+        d1->prt(0);
+        return 0;
+    }
+   
+    <span style='color:green'>#include "gen.cpp" // include only in one *.cpp file or compile separately
+    </span>
+</pre>
+<p>
+Assuming that this program is stored in file test1.cpp,
+you compile it by invoking a little batch file (tt1.bat):
+<pre>
+    codegen ds.def libDir\lib gen 
+    cl test1.cpp
+</pre>
+<p>
+where the first line calls the alib code generator, codegen.
+Codegen does not mangle your code, it only generates additional classes which
+implement the associations (data structures) you specified in file
+ds.def (shown in red in the previous example).
+Codegen expands these statements
+just like the C++ compiler expands C++ templates, but codegen goes 
+a bit further -- it binds the participating classes together with the
+class which represents the association, something that
+cannot be done with C++ templates and definitely 
+not in Java. Let's not dwell on the details of how this is implemented and 
+continue with our example.
+<p>
+The syntax of the codegen call is:
+<pre>
+    codegen ds.def associationLibrary genFile
+</pre>
+where <I>ds.def</I> is the file where all the Association statements
+must be located. These statements may be in any order and interspaced with
+comments, but all of them must be in that single file. The
+<I>associationLibrary</I> is the library (alib\lib) with a special encoding of
+various data structures and patterns. Codegen generates two files
+which you must include in order to compile your code, and the last parameter
+of the codegen call provides their name (gen in the previous example).
+The two files will be <I>genFile.h</I> and <I>genFile.cpp</I>.
+<p>
+If you call codegen with the -uml option, it not only expands the templates but,
+with every compilation, 
+<span style='color:red'>
+it automatically generates the UML class diagram.</span>
+The batch file tt1.bat then looks like this:
+<pre>
+    Windows/DOS version:
+
+    dir *.h > srcList  
+    APATH\codegen -uml ds.def APATH\lib gen srcList cTutorial
+    cl test1.cpp
+    layout -s param.txt layout.inp
+
+    UNIX/Linex version:
+
+    ls *.cpp > srcList  
+    codegen -uml ds.def libDir\lib gen srcList cTutorial
+    cl test1.cpp
+    layout -s param.txt layout.inp
+</pre>
+where the first line generates the list of all the files from which codegen
+can extract inhertance among your classes.
+If all the code including what normally would be *.h files is in one file
+test1.cpp, then the first line would be:
+<pre>
+    dir test1.cpp > srcList
+</pre>
+<p> 
+With the -uml option, codegen generates not only files gen.h and gen.cpp,
+but also file
+layout.inp which is the textual description of the entire UML diagram
+(including the inheritance). 
+file into a picture.
+<I>cTutorial</I> will be the heading of the resulting UML diagram.
+<I>APATH</I> is the path to the alib library, for example c:\incode\alib
+<p>
+Program <I>layout</I> converts file layout.inp into the final UML diagram.
+It needs 
+param.txt, a simple three-line file, which you generate once for your computing
+environment and which describes the size of your screen in pixels 
+and gives the default sizes of font for the UML diagrams.
+<p>
+Note that program <I>layout</I> must decides how to place the boxes 
+around the screen and must connect them with lines that show both inheritance
+and associations. It must also place appropriate labels both on the boxes and
+the lines.
+The result is file display.svg which you can view with your
+Internet browser or specialized software.
+<p>
+Generation of the UML layout is not a simple task because it does not
+have a clean, mathematical objective -- the result should be simple
+and esthetically pleasing. We had to combine a number of tricks
+from the electronic CAD to perform this task which, to a human mind, appears
+relatively simple.
+<p>
+When you run tt1.bat on our example
+for the first time, the compiler detects an error which
+I intentionally left in the code. It shows you one of many ways in
+which the associations are protected against accidental errors. The message
+you get is this:
+<pre>
+test1.cpp(83) : error C2664: 'addTail' : cannot convert parameter 1
+    from 'class Manager *' to 'class Department *'
+    Types pointed to are unrelated;  ...
+</pre>
+<p>but regardless of the error, you already get your first UML diagram:</p>
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut3.jpg" ALIGN="top">
+</div>
+<p>
+Note how useful (and important) it is that the data organization is set
+in such a way that the compiler detects errors before
+you even run the program. In this case (see Note1), 
+association empl can connect only Department and Employee, not Manager and
+Employee.
+<p>
+After correcting this error:
+<pre>
+    e =new Employee("J.Fox");  empl::addTail(d2,e); // <--- note1
+</pre>
+the program compiles, and you can run test1.exe. You get a run-time error
+message from alib:
+<pre>
+    boss.add() error: object=460688 already has a SingleLink 
+</pre>
+The library has detected another error (see the line marked "Note2") where
+G.Gray is being added to department 111 as a manager, but that department
+already has a manager, B.Brown. Catching this types of errors avoids
+tedious debugging. Note that no other C++ or Java library catches such 
+errors. This forces us to examine that line again. If the intention was
+to replace the manager, we would have to change the code like this:
+<pre>
+    boss::remove(d4);
+    m =new Manager("G.Gray"); boss::add(d4,m); // <--- note2
+</pre>
+If this was just a mistake and G.Gray should be the manager of different
+department, then you may change it like this:
+<pre>
+    m =new Manager("G.Gray"); boss::add(d5,m); // <--- note2
+</pre>
+After this, the program compiles, runs, and produces the following output:
+<pre>
+dept=100 manager=C.Black
+   dept=110 manager=A.Green
+      J.Fox
+      K.Doe
+      dept=111 manager=B.Brown
+         S.Winter
+         I.Springer
+         B.Summers
+      dept=112 manager=G.Gray
+         F.Beech
+         H.Oats
+   dept=120 manager=B.White
+</pre>
+
+<H1>Introducing changes</H1>
+<p>
+As the next exercise,
+let's see how easy it is to change the data organization.
+The existing organization has two disadvantages: (a) For a given 
+emloyee, we do not have an easy way to find all his/her superiors.
+(b) When looking for the employee with a given name, we have to traverse
+the tree of all the departments, which for a company with thousands of
+employees may take a long time.
+<p>
+Let's make the following changes: We'll introduce a class Company representing
+the entire company, and in addition to departments holding employees, we'll
+make the Company to keep a hash table of employees.
+We will also replace both linked lists by aggregates. 
+The current version of aLib has only doubly-linked Aggregate2.
+This will allow us to search up through the tree of the departments:
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut2.jpg" ALIGN="top">
+</div>
+<p>
+The implementation of these changes leads to only a few simple modifications
+of the code (program test2.cpp):
+<p>
+<pre>
+    <span style='color:red'>class Company {
+    public:
+        ZZ_Company ZZds;
+        Company(){};
+    };</span>
+
+    Association <span style='color:red'>Aggregate2</span>&ltDepartment,Employee&gt empl;
+    Association <span style='color:red'>Aggregate2</span>&ltDepartment,Department&gt dHier; 
+    Association SingleLink&ltDepartment,Manager&gt boss;
+    Association Name&ltEmployee&gt eName;
+    <span style='color:red'>DataStructure Hash&ltCompany,Employee&gt eHash;
+    Association SingleLink&ltCompany,Department&gt root;</span>
+</pre>
+<p>
+Right on the first compile, regardless whether the compiler finds 
+errors or not, you get the new UML diagram:
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut4.jpg" ALIGN="top">
+</div>
+<p>
+The compile error which we get, however, tell us what is still missing:
+When using a hash table (association Hash), you must provide two
+externally defined functions: One to hash
+the employee (in this case, by their name),
+the other how to compare two employees (again by name).
+For more details on these functions look at the Hash class
+in <A HREF="aClasses.htm">the list of available classes</A>.
+If you don't want to code these functions, you can simply refer to the
+defaults provided by the library:
+<pre>
+    int eHash::hash(Employee *e,int hashSz){
+        char *s;
+        s=eName::get(e);
+        return eHash::hashString(s,hashSz);
+    }
+
+    int eHash::cmp(Employee *e1,Employee *e2){
+        char *s1,*s2;
+        s1=eName::get(e1);
+        s2=eName::get(e2);
+        return strcmp(s1,s2);
+    }
+</pre>
+<p>
+After this, the program compiles and runs without any other modifications
+throughout the code and gives the same results.
+<p>
+Here the program (test3.cpp) which in addition
+to printing the tree of the departments uses the hash table to find H.Oats
+and prints all his superiors. 
+When writing this code, I discovered it would be handy to replace the 
+SingleLink 'boss' by a DoubleLink called the same name.
+All the new code is in blue.
+<pre>
+    // ----------------------------------
+    //         *.h FILES OR FILE
+    // ----------------------------------
+
+    #include <iostream.h>
+    #include <string.h>
+    #include "gen.h"
+
+    // declaration of classes
+    class Employee {
+    public:
+        ZZ_Employee ZZds; // add mechanically to every class
+        Employee(Company *co,char *name);
+        Employee(){}
+        void prt();
+        virtual Department *myDept();
+    };
+
+    class Manager : public Employee {
+    public:
+        ZZ_Manager ZZds;
+        Manager(Company *co,char *name) : Employee(co,name){}
+        Manager() : Employee(){}
+        Department *myDept();
+    };
+
+    class Department {
+        int deptNo;
+    public:
+        ZZ_Department ZZds; 
+        Department(int dNo){deptNo=dNo;}
+        Department(){deptNo=0;}
+        int getDeptNo(){return deptNo;}
+        void prt(int layer);       // recursive print
+        void prtSpaces(int layer); // formatting hierarchical print
+    };
+
+    class Company {
+        Employee *eTemp; // temporary for passing employee name
+    public:
+        ZZ_Company ZZds;
+        Company();
+        ~Company();
+        void prtSuperiors(char *emplName);
+    };
+
+    // ----------------------------------
+    //         FILE ds.def
+    // ----------------------------------
+
+    // declare the relations (schema) one association per line
+
+    Association Hash&ltCompany,Employee&gt eHash;
+    Association SingleLink&ltCompany,Department&gt root;
+    Association Aggregate2&ltDepartment,Employee&gt empl;
+    Association Aggregate2&ltDepartment,Department&gt dHier; 
+    Association DoubleLink&ltDepartment,Manager&gt boss;
+    Association Name&ltEmployee&gt eName;
+
+    // ----------------------------------
+    //         *.cpp FILES OR FILE
+    // ----------------------------------
+
+    int eHash::hash(Employee *e,int hashSz){
+        char *s;
+        s=eName::get(e);
+        return eHash::hashString(s,hashSz);
+    }
+
+    int eHash::cmp(Employee *e1,Employee *e2){
+        char *s1,*s2;
+        s1=eName::get(e1);
+        s2=eName::get(e2);
+        return strcmp(s1,s2);
+    }
+
+    // implementation of all the methods to follow
+
+    Department* Employee::myDept(){
+        return empl::parent(this);
+    }
+
+    Department* Manager::myDept(){
+        return boss::bwd(this);
+    }
+
+    Company::Company(){
+        eHash::form(this,1000); // form hash table with given num.of buckets
+        eTemp=new Employee();
+    }
+
+    Company::~Company(){
+        eHash::free(this); // free (release) the hash table
+        delete eTemp;
+    }
+
+    void Company::prtSuperiors(char *emplName){
+        Employee *ee,*e; Department *d;
+
+        eName::add(eTemp,emplName); // pass name through a temporary object
+        ee=eHash::get(this,eTemp);
+        eName::remove(eTemp); // re-initialize temporary object
+        if(!ee){
+            cout << "employee=" << emplName << " not in the company\n";
+            return;
+        }
+        d=ee->myDept();
+        if(!d){
+            cout<< "employee=" << emplName << " not assigned to a department\n";
+            return;
+        }
+        if(boss::fwd(d) == ee)cout << "\nmanager ";
+        else                  cout << "\nemployee ";
+        cout << emplName << " superiors: ";
+        for(;d; d=dHier::parent(d)){
+            e=boss::fwd(d);
+            if(e==ee) continue;
+            cout << eName::get(e) << "(" << d->getDeptNo() << ") ";
+        }
+        cout << "\n";
+    }
+        
+
+    Employee::Employee(Company *co,char *name){
+        eName::add(this,name);
+        eHash::add(co,this);
+    }
+
+    void Employee::prt(){cout << eName::get(this) << "\n";}
+
+    void Department::prtSpaces(int layer){
+        for(int i=0; i<layer; i++)cout << "   ";
+    }
+
+    // recursive print of departments and employees
+    void Department::prt(int layer){
+        // iterators are automatically provided
+        empl_Iterator eIter; 
+        dHier_Iterator hIter;
+        Department *d;
+        Employee *e;
+
+        prtSpaces(layer);
+        cout << "dept=" << deptNo << " manager=";
+        boss::fwd(this)->prt();
+
+        eIter.start(this); // start employee iterator
+        ITERATE(eIter,e){  // e walkes through all employees
+            prtSpaces(layer+1);
+            e->prt();
+        }
+       
+        hIter.start(this); // start employee iterator
+        ITERATE(hIter,d){  // d walkes through sub-departments
+            d->prt(layer+1);
+        }
+    }
+
+    // main program can already create and manipulate the data
+    int main(){
+        Employee *e; Manager *m; Company *co;
+        Department *d1,*d2,*d3,*d4,*d5;
+
+        co=new Company(); 
+        d1=new Department(100); root::add(co,d1);
+        m =new Manager(co,"C.Black"); boss::add(d1,m);
+        
+        d2=new Department(110);    dHier::addTail(d1,d2);
+        m =new Manager(co,"A.Green"); boss::add(d2,m);
+        e =new Employee(co,"J.Fox");  empl::addTail(d2,e); // <--- note1
+        e =new Employee(co,"K.Doe");  empl::addTail(d2,e);
+
+        d3=new Department(120);    dHier::addTail(d1,d3);
+        m =new Manager(co,"B.White"); boss::add(d3,m);
+
+        d4=new Department(111);        dHier::addTail(d2,d4);
+        m =new Manager(co,"B.Brown");     boss::add(d4,m);
+        e =new Employee(co,"S.Winter");   empl::addTail(d4,e);
+        e =new Employee(co,"I.Springer"); empl::addTail(d4,e);
+        e =new Employee(co,"B.Summers");  empl::addTail(d4,e);
+
+
+        d5=new Department(112);        dHier::addTail(d2,d5);
+        m =new Manager(co,"G.Gray");      boss::add(d5,m); // <--- note2
+        e =new Employee(co,"F.Beech");    empl::addTail(d5,e);
+        e =new Employee(co,"H.Oats");     empl::addTail(d5,e);
+
+        // print the entire data by accessing its root, d1
+        root::fwd(co)->prt(0);
+
+        // print the superiors of H.Oats
+        co->prtSuperiors("H.Oats");
+        return 0;
+    }
+   
+    #include "gen.cpp" // include only in one *.cpp file or compile separately
+</pre>
+<p>
+The result is:
+<pre>
+dept=100 manager=C.Black
+   dept=110 manager=A.Green
+      J.Fox
+      K.Doe
+      dept=111 manager=B.Brown
+         S.Winter
+         I.Springer
+         B.Summers
+      dept=112 manager=G.Gray
+         F.Beech
+         H.Oats
+   dept=120 manager=B.White
+
+employee H.Oats superiors: G.Gray(112) A.Green(110) C.Black(100) 
+</pre>
+
+
+
+<H2><A name="PART2"></A>PART 2: Example of the top-down approach</H2>
+
+<p>
+Designing software top-down means that we start with vague ideas and work
+with a model such as the UML class diagram without writing much code. 
+Only when we think that our model (the architecture) is more or less right,
+we gradually begin to fill in the code.
+<p>
+This of course does not mean that the initial model remains without changes.
+As the implementation proceeds, new conditions and problems pop up,
+and the model must change, often quite significantly.
+<p>
+The existing UML tools give you a graphical environment in which you can
+design and change UML models. They also give you code generators which,
+from a given UML diagram, generate code which "implements"
+the architecture. I used quotes for the word <I>implements</I> 
+because these tools only generate a rough skeleton which you often must modify
+by hand.
+<p>
+The big problem with the existing tools is that they try to match
+UML associations of cooperating classes with
+container based data structures from libraries such as STL.
+Since the two concepts do not match, the tools can generate only
+a rough sketch of the code and cannot properly support model evolution.
+Also, in some situations, it is impossible to retrieve the UML
+information automatically.
+<p>
+For example, let's assume that programmers who are implementing the software
+add 3 pointers and 2 collections to the model. Unless you know their
+intentions it is impossible to guess
+whether this is a new, complex association or just 5 simple ones, or perhaps
+only expansion (change) of several existing associations.
+For more explanation see Jiri's new book <I>Next Software Revolution</I>.
+<p> 
+Here is an example of how IN_CODE eliminates these problems. Let's assume
+that we have a warehouse which stores parts required for the
+manufacturing of several different products. The parts are identified
+by their ID number (their bar code), the products are identified
+by their names.
+<p>
+Right away, we see that we have three basic entities which 
+should represent as classes -- Warehouse, Part, and Project -- and which
+should be connected with one-to-many
+relations between Warehouse and Part, and between Product and Part. 
+Instead of wasting time on
+playing with a graphical tool, you can describe this model quickly
+in a few lines of text which is, at the same time, already a valid code.
+If you have read Part 1 (bottom-up approach), you already know what the
+various parts of this code mean:
+<pre>
+    // ----------------------------------
+    //         *.h FILES OR FILE
+    // ----------------------------------
+
+    #include "gen.h"
+    class Warehouse {
+    public:
+        ZZ_Warehouse ZZds;
+    };
+    class Part {
+        int ID;
+    public:
+        ZZ_Part ZZds;
+    };
+    class Product {
+    public:
+        ZZ_Product ZZds;
+    };
+
+
+    // ----------------------------------
+    //         FILE ds.def
+    // ----------------------------------
+
+    <span style='color:red'>Association Uni1toX&ltWarehouse,Part&gt stored;
+    Association Uni1toX&ltProduct,Part&gt needed;
+    Association Name&ltProduct&gt prodName;
+    </span>
+
+    // ----------------------------------
+    //         *.cpp FILES OR FILE
+    // ----------------------------------
+
+    // no code yet
+    #include "gen.cpp"
+</pre>
+<p>
+Then you invoke this little batch file (uu.bat)
+<pre>
+    dir *.h > srcList
+    c:\incode\alib\codegen -uml ds.h c:\incode\alib\lib . srcList umlFile
+    c:\incode\layout\layout -s param.txt layout.inp
+</pre>
+And you instantly have a neatly laid UML class diagram:
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut5.jpg" ALIGN="top">
+</div>
+<p>
+Now let's assume that
+after you discuss this diagram with your client, several things come up:
+<UL>
+<LI>The warehouse should keep the count of the parts currently in stock.
+Besides adding member <I>count</I>, this means that your class Part should
+be renamed as PartType.
+<LI>The current model does not reflect the fact that there are several products.
+<LI>The client tells you there is not just one warehouse but several of them.
+<LI>It would make sense to add one more class, Company, in order to encapsulate
+the entire problem. 
+</UL>
+All this results in only a few changes in the textual model (shown in red):
+<pre>
+
+    // ----------------------------------
+    //         *.h FILES OR FILE
+    // ----------------------------------
+
+    #include "gen.h"
+    <span style='color:red'>class Company {
+    public:
+        ZZ_Company ZZds;
+    };</span>
+    class Warehouse {
+    public:
+        ZZ_Warehouse ZZds;
+    };
+    class Part<span style='color:red'>Type</span> {
+        int ID;
+        <span style='color:red'>ind count;</span>
+    public:
+        ZZ_Part<span style='color:red'>Type</span> ZZds;
+        int getID(){return ID;} // I also added this
+    };
+    class Product {
+    public:
+        ZZ_Product ZZds;
+    };
+
+
+    // ----------------------------------
+    //         FILE ds.def
+    // ----------------------------------
+
+    <span style='color:red'>Association Uni1toX&ltCompany,Warehouse&gt warehouses;
+    Association Uni1toX&ltCompany,Product&gt products;</span>
+    Association Uni1toX&ltWarehouse,PartType&gt stored;
+    Association Uni1toX&ltProduct,PartType&gt needed;
+    Association Name&ltProduct&gt prodName;
+
+
+    // ----------------------------------
+    //         *.cpp FILES OR FILE
+    // ----------------------------------
+
+    // no code yet
+    #include "gen.cpp"
+</pre>
+Invoking uu.bat will give us the new UML diagram:
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut6.jpg" ALIGN="top">
+</div>
+<p>
+Note that what we have is already a solid code which we can compile and run.
+For example, if someone asks you how much memory is needed to store
+data for 3 warehouses, 60 products and 7,500 parts with 800 parts per product
+you can add this simple main()
+<pre>
+    int main(){
+        // objects themselves
+        int res=sizeof(Company) + 3*sizeof(Warehouse) + 60*sizeof(Product)
+                                                + 7500*sizeof(PartType);
+
+        // Uni1toX keeps an array of pointer links (each link 4B).
+        // This array may re-allocate itself with 3x bigger size when
+        // the current size is not sufficient. This means that Uni1toX
+        // needs on average 8B per link.
+
+        res=res + 7500*8 + 60*800*8;
+        printf("total=%d bytes\n",res);
+        return 0;
+    };
+</pre>
+and if you store it in file <I>topdown.cpp</I>, you can
+compile and run it with
+<pre>
+    dir *.h > srcList
+    c:\incode\alib\codegen -uml ds.def c:\incode\alib\lib gen srcList cTut
+    cl topdown.cpp 
+    topdown
+</pre>
+and you will get the result of 505540 bytes.
+<p>
+Let's assume that the discussion about the architecture continues:
+<UL>
+<LI>One of your colleagues points out 
+that you should also monitor the suppliers and  
+how many parts they deliver to individual warehouses.
+This means another class, Supplier.
+<LI>The client says
+that the company needs fast direct access to the number of individual parts,
+using the PartType ID as a key - in other words the Company must also 
+keep a hash table of PartTypes.
+</UL>
+All this results in the following additions to your code. Note
+how compact and efficient the textual representation is.
+<pre>
+    ...
+    class Supplier {
+    public:
+        ZZ_Supplier ZZds;
+    };
+    Association Uni1toX&ltCompany,Supplier&gt suppliers;
+    Association Uni1toX&ltSupplier,PartType&gt supply;
+    Association Hash&ltCompany,PartType&gt partHash;
+    ...
+</pre>
+and when we invoke uu.bat again, we get the new UML diagram:
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut7.jpg" ALIGN="top">
+</div>
+<p>
+At this point one of the programmers who is present at the meeting asks:
+Could we calculate the orders to individual
+suppliers if we want to build n products of type x?
+<P>
+The logic would is simple but it requires, for a given PartType, to know
+who is the supplier. This means that the association 'supply' must be
+re-defined as bi-directional one-to-many:
+<pre>
+    Association Uni1toX&ltSupplier,PartType&gt supply; // old model
+    Association Bi1toX&ltSupplier,PartType&gt supply;  // new model
+</pre>
+If you try to compile the new code, the compiler tells you that you
+included the hash table but did not specify the hashing functions.
+That does not prevent you from getting the UML diagram, but if
+you want to keep your program working while you are evolving the model
+(a good idea), you should add the two functions, in the same way
+as we added the hashing functions in the example in <I>Part 1</I>, section
+with title <I>Introducing Changes</I>.
+<pre>
+    int partHash::cmp(PartType *pt1,PartType *pt2){
+        return pt1->getID() - pt2->getID();
+    }
+
+    int partHash::hash(PartType *pt,int hashSz){
+        return hashInt(pt->getID(),hashSz);
+    }
+</pre>
+<p>
+At this point you may start to implement the software,
+and you can carefully plan and orchestrate its implementation or just
+start to code and evolve it gradually. In either case, 
+you can immediately compile and test any individual features
+as you add them. The progress is fast (rapid development), yet producing
+a solid production-grade code all the time. The UML diagram always
+perfectly matches the code, and even complex changes of architecture are
+easily absorbed even with a lot of code already in place. The association
+classes are designed in a way that if you change their definitions, remove
+them or add new ones, the compiler will tell you where to fix the code --
+usually in only a surprisingly few places.
+<p>
+Note that, from this moment on, 
+there is no difference between the top-down and bottom-up approaches.
+You evolve the code and the architecture in parallel, but the control
+of both is the textual model (file ds.def).
+<p>
+Also, as your software evolves, you will probably replace some of the
+generic Associations (Uni1toXk, Bi1toX,..) by more specific data structures
+such as Bag, LinkList2, Aggregate2 etc. Again this will result
+in no or just a few changes of your code.
+<p>
+Before closing the tutorial, lets show what happens if you introduce
+a change which involves inheritance. Let's assume that
+after your programmers worked for weeks on our warehouse program,
+one of the architects comes with a new idea. Products are usually
+not built from simple parts but rather from bigger assemblies. These
+assemblies are built from simpler essemblies or basic parts, and 
+may be stored in warehouses just like parts.
+If you are familiar with design patterns,
+this means pattern Composite involving PartType and a new class Assembly.
+<p>
+You thought more about it, and you decided that the Product and the Assembly
+are really the same thing, except
+that the Product has a special name and that the Company keeps a special list of
+Products -- we can call them "final assemblies".
+Also, some of the Associations should not remain Uni1toX which,
+by default, is a bag. For example, the association 'products' should not list
+any product twice.
+<p>
+All this looks like a rather complex set of requirements, 
+but the changes to the model are minimal:
+<pre>
+    <span style='color:red'>class Assembly : public PartType {
+    public:
+        ZZ_Assembly ZZds;
+    };</span>
+    class Product <span style='color:red'>: public Assembly</span> {
+    public:
+        ZZ_Product ZZds;
+    };
+
+    Association Bag&ltAssembly,PartType&gt assemble;
+    Association <span style='color:red'>LinkList1</span>&ltCompany,Supplier&gt suppliers;
+    Association <span style='color:red'>Aggregate2</span>&ltSupplier,PartType&gt supply;
+    Association Hash&ltCompany,PartType&gt partHash;
+    Association <span style='color:red'>LinkedList1</span>&ltCompany,Warehouse&gt warehouses;
+    Association <span style='color:red'>LinkedList1</span>&ltCompany,Product&gt products;
+    Association Aggregate2&ltWarehouse,PartType&gt stored;
+    Association Name&ltProduct&gt prodName;
+    // Association Uni1toX&ltProduct,PartType&gt needed; <span style='color:red'> // eliminated </span>
+</pre>
+And the UML diagram you get is:
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut8.jpg" ALIGN="top">
+</div>
+<p>
+    
+<H2><A name="PART3"></A>PART 3: The data structure library</H2>
+<p>
+<span style='color:blue'>
+For a detailed description of the currently available classes, see
+<A HREF="aClasses.doc">incode\alib\doc\aClasses.doc</A>.
+</span>
+
+<H2><A name="3_1"></A>3.1 Ading a new association to the library</H2>
+
+<p>
+This section describes how you code a new association for the alib library.
+It does not describe the reasons for the template/macro-like parameters
+$$,$0,$1,$2. These parameters allow the code generator (codegen) to create
+instances of the association customized to selected classes, in a similar
+way in which the C++ compiler expands templates. However, codegen does
+a bit more -- it also inserts the members that implement the data structure
+into the participating classes.
+<p>
+If you have an extensive 
+experience with data structures, you may have an intuitive feel for
+why and how to use these parameters and then just keep reading.
+However, if you find the use of these parameters confusing, use the
+<A HREF="cslowtut.htm">slow route</A> which will lead you through several
+examples before returning back to this
+spot. If you still want to know more,
+the internal mechanism of how all this works
+is described in the book "Next Software Revolution" by Jiri Soukup.
+<p>
+The new association which you are going to implement
+can be any data structure which involves cooperation of
+several classes. The current version of the code generator (codegen)
+cannot handle more than 2 classes, but this restriction is not conceptual
+and will soon be removed.
+<p>
+As we did in the previous sections, we will explain everything on a
+practical example. One of the most useful data structures which is
+missing in most existing class libraries is the LinkedList2
+shown in the following diagram. It is an intrusive implementation of
+the one-to-many relation which also can be used as uni-directional set.
+It is based on the doubly-linked list for which the operation remove()
+is very fast without changing the order of children.
+<p>
+Note that alib already contains class LinkedList2 with the functionality
+identical to LinkedList2 we are going to imlement. However, the internal
+implementation of LinkedList2 from alib/lib is different -- it is not 
+implemented 
+from scratch, but it is built on a simpler association called Ring2.
+You will learn later to do that but, for now, let's implement
+it from scratch.
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut9.jpg" ALIGN="top">
+</div>
+<p>
+Before we start to code, remind yourself how the data structure will be used.
+Here are several examples.
+<pre>
+    Association LinkedList2&ltCompany,Product&gt products;
+    Association LinkedList2&ltCompany,Employee&gt employees;
+    Association LinkedList2&ltProduct,Component&gt assembly;
+                             $1      $2           $$
+</pre>
+<p>
+The last line shows the three parameters which will we need for coding
+the generic form of the association:
+<UL>
+  <LI>$$ is the name of the association 
+  <LI>$1 is the first class participating in the association, usually
+      the more important one, called "parent" or "holder"
+  (LI>$2 is the second class participating in the association.
+</UL>
+<p>
+As usual in C++, the new class will be recorded in two files *.h and *.cpp.
+The name of the files does not have to coincide with the name of the 
+association (as in Java). We will use llist2.h and llist2.cpp, where llist2
+is an obvious abbreviation for LinkedList2.
+<p> 
+These files typically include definitions and implementations of
+4 classes as we have them in LinkedList2: (parent,child,association,iterator).
+After you read the entire PART 3, you may want to
+browse through the *.h files in alib/lib, where you ill find
+files with classes (holder, element,association),(source,target,association)
+or (element, association, iterator).
+Now back to our LinkedList2. First read the *.h file where I used the red
+colour to emphasize the special parameters. 
+<p>
+<H4><span style='color:green'>FILE llist2.h</span></H4>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    #infdef ZZ_<span style='color:red'>$$_</span>LINKED_LIST2_INCLUDED
+    #define ZZ_<span style='color:red'>$$_</span>LINKED_LIST2_INCLUDED
+    class <span style='color:red'>$$_</span>LinkedList2Parent {
+    public:
+        <span style='color:red'>$$_</span>LinkedList2Parent(){tail=NULL;}
+        <span style='color:red'>$2</span> *tail;
+    };
+
+    class <span style='color:red'>$$_</span>LinkedList2Child {
+    public:
+        <span style='color:red'>$$_</span>LinkedList2Child(){next=prev=NULL;}
+        <span style='color:red'>$2</span> *next;
+        <span style='color:red'>$2</span> *prev;
+    };
+
+    class <span style='color:red'>$$_</span>LinkedList2 {
+    public:
+        static void addTail(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c);
+        static void addHead(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c);
+        static void remove(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c);
+        // ... more methods
+    };
+
+    class <span style='color:red'>$$_</span>LinkedList2Iterator {
+        int forward;
+        <span style='color:red'>$2</span> *nxt;
+        <span style='color:red'>$1</span> *par;
+    public:
+        <span style='color:red'>$$_</span>LinkedList2Iterator(){forward=1; nxt=NULL; par=NULL;}
+        <span style='color:red'>$2</span> *fromHead(<span style='color:red'>$1</span> *p);
+        <span style='color:red'>$2</span> *fromTail(<span style='color:red'>$1</span> *p);
+        <span style='color:red'>$2</span> *next(); // traverses forward or backward
+    };
+    #endif // ZZ_<span style='color:red'>$$_</span>LINKED_LIST2_INCLUDED
+</pre>
+</td></tr></table>
+This code is easy to read and maintain. We have the ..Parent class which
+has the <I>tail</I> pointer to the list of children. The ..Child class has
+two pointers <I>next</I> and <I>prev</I> which implement the doubly linked
+ring of children.
+<p>
+The LinkedList2 class does not include any data, it only has methods that
+control the association. The iterator allows to traverse the children in
+both directions. For example:
+<pre>
+    Association LinkedList2&gtProduct,Component&lt assembly;
+    Product *p; Component *c;
+    assembly_Iterator it;
+    ...
+    for(c=it.fromHead(p); c; c=it.next()){ ... } // forward traversal
+    for(c=it.fromTail(p); c; c=it.next()){ ... } // reverse traversal
+</pre>
+The use of parameters $1 and $2 is the same as when working with C++
+templates, except that using their short form makes the code more crisp
+and easier to read. 
+The names of all classes are parametrized with prefix $$_ , which is 
+needed to preven collision of names for multiple use of the same
+association:
+<pre>
+    Association LinkedList2&ltCompany,Product&gt products;
+    Association LinkedList2&ltCompany,Employee&gt employees;
+    Association LinkedList2&ltProduct,Component&gt assembly;
+</pre>
+It also allows you to use multiple associations for the same classes,
+for example:
+<pre>
+    Association LinkedList2&ltProduct,Component&gt assembly1;
+    Association LinkedList2&ltProduct,Component&gt assembly2;
+    Association LinkedList2&ltProduct,Component&gt assembly3;
+</pre>
+Now let's look at the second file
+<p>
+<H4><span style='color:green'>FILE llist2.cpp</span></H4>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    void <span style='color:red'>$$_</span>LinkedList2::addTail(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c){
+        <span style='color:red'>$2</span> *c1,*c2;
+
+        if(c-><span style='color:red'>$0</span>.next){
+            printf("<span style='color:red'>$$_</span>LinkedList2::addTail() error: child already in a list\n");
+            return;
+        }
+        c1=p-><span style='color:red'>$0</span>.tail;
+        if(c1){ 
+            c2=c1-><span style='color:red'>$0</span>.next;
+            c1-><span style='color:red'>$0</span>.next=c; c-><span style='color:red'>$0</span>.next=c2;
+            c2-><span style='color:red'>$0</span>.prev=c; c-><span style='color:red'>$0</span>.prev=c1;
+        }
+        else {c-><span style='color:red'>$0</span>.next=c-><span style='color:red'>$0</span>.prev=c;}
+        p-><span style='color:red'>$0</span>.tail=c;
+    }
+    void <span style='color:red'>$$_</span>LinkedList2::addHead(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c){
+        <span style='color:red'>$2</span> *c1,*c2;
+
+        addTail(p,c);
+        if(p-><span style='color:red'>$0</span>.tail)p-><span style='color:red'>$0</span>.tail=p-><span style='color:red'>$0</span>.tail-><span style='color:red'>$0</span>.prev;
+    }
+
+    void <span style='color:red'>$$_</span>LinkedList2::remove(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c){
+        if(c-><span style='color:red'>$0</span>.next==c){
+            p-><span style='color:red'>$0</span>.tail=c-><span style='color:red'>$0</span>.prev=c-><span style='color:red'>$0</span>.next=NULL;
+            return;
+        }
+        if(p-><span style='color:red'>$0</span>.tail==c)p-><span style='color:red'>$0</span>.tail=c-><span style='color:red'>$0</span>.prev;
+        c-><span style='color:red'>$0</span>.next-><span style='color:red'>$0</span>.prev=c-><span style='color:red'>$0</span>.prev;
+        c-><span style='color:red'>$0</span>.prev-><span style='color:red'>$0</span>.next=c-><span style='color:red'>$0</span>.next;
+        c-><span style='color:red'>$0</span>.prev=c-><span style='color:red'>$0</span>.next=NULL;
+    }
+
+    <span style='color:red'>$2</span>* <span style='color:red'>$$_</span>LinkedList2Iterator::fromHead(<span style='color:red'>$1</span> *p){
+        <span style='color:red'>$2</span> *ret;
+
+        forward=1;
+        par=p;
+        if(p-><span style='color:red'>$0</span>.tail==NULL)return NULL;
+        ret=p-><span style='color:red'>$0</span>.tail-><span style='color:red'>$0</span>.next;
+        nxt=ret-><span style='color:red'>$0</span>.next;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    <span style='color:red'>$2</span>* <span style='color:red'>$$_</span>LinkedList2Iterator::fromTail(<span style='color:red'>$1</span> *p){
+        <span style='color:red'>$2</span> *ret;
+
+        forward=0;
+        par=p;
+        ret=p-><span style='color:red'>$0</span>.tail;
+        if(ret==NULL)return NULL;
+        nxt=ret-><span style='color:red'>$0</span>.prev;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    <span style='color:red'>$2</span>* <span style='color:red'>$$_</span>LinkedList2Iterator::next(){
+        <span style='color:red'>$2</span> *ret;
+
+        ret=nxt;
+        if(!ret)return NULL;
+        if(forward){
+            if(ret==par-><span style='color:red'>$0</span>.tail)nxt=NULL;
+            else nxt=ret-><span style='color:red'>$0</span>.next;
+        }
+        else {
+            nxt=ret-><span style='color:red'>$0</span>.prev;
+            if(nxt==par-><span style='color:red'>$0</span>.tail)nxt=NULL;
+        }
+        return ret;
+    }
+</pre>
+</td></tr></table>
+
+<p>
+After you move these two files into alib/lib, all which remains is to register
+the new association in file alib/lib/registry.
+<p>
+WARNING: If you want to experiment with the new LinkedList2, do not move it
+into alib/lib unless you want to replace LinkedList2 which is already there.
+Create a separate directory for your associations, and move your files there.
+You also have add the 'registry' file to that directory. For your first class,
+this file will contain only one line:
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFCCF0" width="80%"> 
+<pre>
+    u1-* LinkedList2&ltLinkedList2Parent,LinkedList2Child&gt llist2 Iterator;
+</pre>
+</td></tr></table>
+
+<p>
+If you are adding the new class to an existing library, just add this line
+to file incode/alib/lib/registry (add it anywhere, the position of the line
+is irrelevant). In this example,
+the meaning of the first 4 characters is:
+<UL>
+<LI>u = uni-directional association,
+<LI>* = the multiplicity of the source end is 'many',
+<LI>- = association of two classes,
+<LI>* = the multiplicity of the target end is 'many'.
+</UL>
+The first character can be 'u' or 'b' (b or bi-directional), or 'U' or 'B'
+if this association is a default for this association type.
+<p>
+If the association connects more then 2 classes, the registry record 
+has two additional characters for each additional target class. For example
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFCCF0" width="80%"> 
+<pre>
+    u14*u*u1 FSM&ltFSMholder,State,Input,TableElem&gt fsm;
+</pre>
+</td></tr></table>
+
+<p>
+where one FSMholder has access to many States and to many Inputs but only
+to one TableElem, yet neither of these know in which FSM they are used
+(u = uni-directions access for all the targets).
+<p>
+NOTE: In alib Ver.2.0, the FSM class is not included yet. This example
+is based on class FSM from the Pattern Template Library (PTL), the library
+with classes that are generally easy to port to alib.
+<p>
+A special registration code is used for the commonly occuring 
+many-to-many associations.
+The code has always only 4 characters:  <pre>
+    R*n*
+</pre>where 
+<I>n</I> is the number of participating classes excluding(!) the relation
+class which is always listed as first. For example for
+<p>
+<pre>
+    class Student{...};
+    class Course {...};
+    class IsTaking{
+        int lastMark;
+        ...
+    }
+
+    Association 2XtoX(IsTaking,Student,Course) isTaking;
+</pre>
+<p>
+the registration code is
+<p>
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFCCF0" width="80%"> 
+<pre>
+    R*2* 2XtoX&ltIsTaking,Student,Course&gt istaking;
+</pre>
+</td></tr></table>
+
+<p>
+The associations which we just discussed would be then displayed like this:
+<div align='center'>
+<IMG SRC="ctut/ctut12.jpg" ALIGN="top">
+</div>
+
+<p>
+Let's now return to your new association and how we can use it
+in a program (this code is also available as file alib\doc\ctut\test7.cpp):
+<p>
+<p>
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#BBFFB0" width="80%"> 
+<pre>
+    // ----------------------------------
+    //         *.h FILES OR FILE
+    // ----------------------------------
+
+    #include &ltstdio.h&gt
+    <span style='color:red'>#include "gen.h"</span>
+
+    class Component {
+        char *cName; // not used in LinkedList2, only for the testing
+    public:
+        <span style='color:red'>ZZ_Component ZZds;</span>
+        Component(char *name){cName=name;}
+        void prt(){printf("   %s\n",cName);}
+    };
+
+    class Product {
+        char *pName; // not used in LinkedList2, only for the testing
+    public:
+        <span style='color:red'>ZZ_Product ZZds;</span>
+        Product(char *name){pName=name;}
+        void prt(){printf("%s\n",pName);}
+    };
+</pre>
+</td></tr>
+
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    // ----------------------------------
+    //         FILE ds.def
+    // ----------------------------------
+
+    <span style='color:red'>Association LinkedList2&ltProduct,Component&gt assembly;
+    </span>
+</pre>       
+</td></tr>
+
+</tr><td valign="top" bgcolor="#C6F5FF" width="80%"> 
+<pre>
+    // ----------------------------------
+    //         *.cpp FILE(S)
+    // ----------------------------------
+    int main(){
+        Product *p; Component *c,*cMot; 
+        <span style='color:red'>assembly_</span>Iterator it;
+
+        p=new Product("bicycle");
+        // load several colour to the list
+        c=new Component("wheel"); <span style='color:red'>assembly</span>::addTail(p,c);
+        c=new Component("pedal"); <span style='color:red'>assembly</span>::addTail(p,c);
+        c=new Component("handlebar"); <span style='color:red'>assembly</span>::addTail(p,c);
+        c=new Component("motor"); <span style='color:red'>assembly</span>::addTail(p,c);
+        cMot=c; // remember the 'motor' component
+        c=new Component("chain"); <span style='color:red'>assembly</span>::addTail(p,c);
+        c=new Component("frame"); <span style='color:red'>assembly</span>::addTail(p,c);
+
+        // remove the 'motor' from the component list
+        <span style='color:red'>assembly</span>::remove(p,cMot);
+
+        // print the resulting list
+        printf("Product: "); p->prt();
+        for(c=it.fromHead(p); c; c=it.next()){
+            c->prt();
+        }
+        return 0;
+    }
+    #include "gen.cpp"</span>
+</pre>
+</td></tr></table>
+<p>
+NOTE: The recommended way to deal with variable length names is to use
+the association Name, not raw pointer members used here (cName and pName).
+As an exercise, you may try to replace these pointers by Name.
+<p>
+
+<H2><A name="3_2"></A>3.2 Deriving a new association from an
+existing class</H2>
+
+You guessed it correctly, now we are going to expand LinkedList2 into something
+else, and it will be Aggregate2, which is LinkedList2 where each child knows
+its parent. This will be a much simpler task than designing an association
+from scratch. 
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut11.jpg" ALIGN="top">
+</div>
+<p>
+Two following two files (aggreg2.h and aggreg2.cpp) were copied directly
+from alib/lib. Whether the LinkedList2 association
+was implemented differently is irrelevant, as long as its 
+interface (methods) are the same.
+Watch for the following details:
+<UL>
+  <LI>Note how all the four classes (Parent, Child, Association and its
+Iterator) for Aggregate2 are derived through inheritance from LinkedList2.
+  <LI>The only new data is the 'parent' member in $$_Aggegate2Child.
+  <LI>There is a special class $$_Aggregate2ParentAggregate2Child for
+      situations where the same class is both the parent and the child of this
+      association. This is a situation we did not discuss for LinkedList2,
+      but the 
+      linkedList2 from alib has such a class (see file alib/lib/llist2.h).
+  <LI>LinkedList2 methods which work without a change do not have
+      to be re-coded or even listed in aggreg2.h.
+      This applies in particular to the Iterator which is taken over completely
+      from LinkedList2.
+  <LI>Some methods, in particular remove(), have now fewer calling parameters
+      because the parent can be derived from the child.
+</UL>
+<h3><span style='color:green'>FILE aggreg2.h:</span></H3>
+<p>
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    #ifndef ZZ_$$_AGGREGATE2_INCLUDED
+    #define ZZ_$$_AGGREGATE2_INCLUDED
+
+    class $1;
+    class $2;
+
+    // description of the cooperating classes
+    class $$_Aggregate2Parent : public $$_LinkedList2Parent {
+    public:
+        $$_Aggregate2Parent() : $$_LinkedList2Parent(){ }
+    };
+
+    class $$_Aggregate2Child : public $$_LinkedList2Child {
+    public:
+        $1* parent;
+        $$_Aggregate2Child() : $$_LinkedList2Child(){ parent=NULL; }
+    };
+
+    // the following class is used when Parent==Child
+    class $$_Aggregate2ParentAggregate2Child 
+           : public $$_LinkedList2ParentLinkedList2Child {
+    public:
+        $1* parent;
+        $$_Aggregate2ParentAggregate2Child()
+           : $$_LinkedList2ParentLinkedList2Child(){ parent=NULL; }
+    };
+
+    // ----------------------------------------------------------
+
+    class $$_Aggregate2 : public $$_LinkedList2 {
+
+    public:
+        static void addHead($1 *p, $2 *c);
+        static void addTail($1 *p, $2 *c);
+        static void append($2 *c1, $2 *c2); // has a different syntax
+        static void remove($2 *c);             // has a different syntax
+        static $1* const parent($2 *c);    // is new
+        static $2* const next($2 *c){ // returns NULL when s is the tail
+            return $$_LinkedList2::next(parent(c),c);
+        }
+        static $2* const prev($2 *c){ // returns NULL when s is the head
+            return $$_LinkedList2::prev(parent(c),c);
+        }
+        // ...
+    };
+    
+    class $$_Aggregate2Iterator : public $$_LinkedList2Iterator {
+    };
+
+    #endif // ZZ_$$_AGGREGATE2_INCLUDED
+</pre>
+</td></tr></table>
+
+<h3><span style='color:green'>FILE aggreg2.cpp:</span></H3>
+<p>
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    class $1;
+    class $2;
+                          
+    void $$_Aggregate2::addHead($1 *p, $2 *c){
+        if(c->$0.parent){
+            printf("$$.addHead() error: Child=%d already in an Aggregate2\n",c);
+            return;
+        }
+        c->$0.parent=p;
+        $$_LinkedList2::addHead(p,c);
+    }
+                          
+    void $$_Aggregate2::addTail($1 *p, $2 *c){
+        if(c->$0.parent){
+            printf("$$.addTail() error: Child=%d already in an Aggregate2\n",c);
+            return;
+        }
+        c->$0.parent=p;
+        $$_LinkedList2::addTail(p,c);
+    }
+                              
+    // append Child c2 after Child c1
+    void $$_Aggregate2::append($2 *c1, $2 *c2){
+        $1* p=c1->$0.parent;
+        if(!p){
+            printf("$$.append() error: c1=%d not in an Aggregate2\n",c1);
+            return;
+        }
+        if(c2->$0.parent){
+            printf("$$.addTail() error: c2=%d already in an Aggregate2\n",c2);
+            return;
+        }
+        $$_LinkedList2::append(p,c1,c2);
+    }
+                              
+    void $$_Aggregate2::remove($2 *c){
+        $1* p=c->$0.parent;
+        if(p) $$_LinkedList2::remove(p,c);
+        else printf("WARNING: $$.remove() called, but c=%d disconnected\n",c);
+    }
+    
+    $1* const $$_Aggregate2::parent($2 *c){ return c->$0.parent; }
+</pre>
+</td></tr></table>
+    
+<p>
+The new line in the registry file is a bit more complicated
+compared to the one for an association we coded from scratch.
+It now describes how the Aggregate2 (and its parameters) are
+derived from the LinkedList2 (and its parameters). Character ':' is 
+used to record inheritance, and the base class parameters coded with $1,$2
+refer to the parameters of the derived class.
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    b1-* Aggregate2&ltAggregate2Parent,Aggregate2Child&gt aggreg2 :LinkedList2&lt$1,$2&gt Iterator;
+</pre>
+</td></tr></table>
+
+<p>
+Note that if a class is passive (no references or data
+used by this association gets inserted into it)
+the parameter must have the '-' sign. Also, in some situations, the base class
+may be listed with one of the basic types such as int, void*, etc.
+Here is an example from the existing library (alib/lib/registry):
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    u1-* Array&ltArrayHolder,-ArrayElement&gt array;
+    u1-* Bag&ltBagHolder,-BagElement&gt bag :Array&lt$1,void*&gt Iterator;
+</pre>
+</td></tr></table>
+
+<p>
+When you use association Array&ltA,B&gt, each object of class A keeps a
+dynamically growing array of objects (not just pointers) of class B.
+This does not require any insertion into class B, therefore the registration
+line for Array uses -ArrayElement.
+<p>
+Association Bag&ltA,B&gt is a new interface for the Collection class from
+most container libraries. For each object of class A, it keeps a dynamically
+growing array of pointers(!) to objects of class B. There is no insertion
+into B, therefore -BagElement has the negative sign. Bag inherits the Array
+of void* pointers which are, internally and safely, interpreted as B*.
+<p>
+
+<H2><A name="3_3"></A>3.3 Converting an STL class to an association</H2>
+
+<p>
+Since containers are only special (simple) associations, this is only a matter
+of re-writing the interface. Here is an example from alib/lib. The STL library
+includes class vector&ltT&gt which stores an array of objects type T.
+This class is an equivalent of our Array association, but programmers who 
+have been using STL for years may prefer to use STL vector because they
+are familiar with its methods and behaviour. 
+<p>
+For this reason, alib includes association Vector1 which is
+the original STL vector&ltT&gt with the association-style interface.
+The difference is minor (no problem for programmers who are used to STL),
+yet the new style allows the integration with UML and other, more advanced
+associations.
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    // Traditional use of STL           Vector as an association
+    // ----------------------           ------------------------
+    class B {                           class B {
+        ...                                ...
+    };                                  };
+
+    class A {                           class A {
+    public:                                ...
+        vector&ltB&gt vec;                  };
+    };                                  Association Vector1&ltA,B&gt vec;
+
+    A *a; B b;                          A *a; B b;
+      ...                                 ...
+    a->vec.push_back(b);                vec::push_back(a,b);
+</pre>
+</td></tr></table>
+
+<p>
+The three critical parts of the push_back() call are: a,b,vec. Their order
+reflects your way of thinking depending which methodology you use. When using
+STL, a is first on your mind, then you think about vec which is part of every
+A and about adding b to it. When using the association, you first think
+about the model and the association vec and then you decide which a and b
+to use.
+<p>
+<h3><span style='color:green'>FILE stlVector1.h:</span></H3>
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    #include &ltvector&gt
+    using namespace std;
+    class $1;
+    class $2;
+
+    // ----------------------------------------------------------
+    // description of the cooperating classes
+    // ----------------------------------------------------------
+    class $$_Vector1Parent {
+    public:
+        vector&lt$2&gt vect;
+        $$_Vector1Parent(){ }
+    };
+
+    class $$_Vector1Child {
+    };
+    // ----------------------------------------------------------
+
+    class $$_Vector1 {
+    public:
+        // typedef $2* iterator;
+        typedef vector&lt$2&gt::iterator iterator;
+        static iterator begin($1 *p);
+        static iterator end($1 *p);
+    
+        static void push_back($1 *p, $2 *c);
+        // .. all other methods of STL vector
+    
+    };
+</pre>
+</td></tr></table>
+
+<p>
+<h3><span style='color:green'>FILE stlVector1.cpp:</span></H3>
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+    void $$_Vector1::push_back($1 *p, $2 *c){
+        using namespace std;
+        p->$0.vect.push_back(*c);
+    }    
+    $$_Vector1::iterator $$_Vector1::begin($1 *p){return p->$0.vect.begin();}
+    $$_Vector1::iterator $$_Vector1::end($1 *p)  {return p->$0.vect.end();}
+</pre>
+</td></tr></table>
+
+<p>
+WARNING: The alib association Vector1 is only a skeleton with several
+methods. In order to fully convert the STL vector, the interface for all
+its methods must be patiently converted.
+<p>
+    
+
+<H2><A name="3_4"></A>3.4 Expanding the STL vector to a bi-directional
+association</H2>
+
+<p>
+Once we have the STL vector&ltT&gt class represented as an association
+(Vector1), we can easily derive from it a bi-rectional vector class (Vector2)
+where each element of the array keeps a reference (pointer) to 
+to the object which holds the array. This is a data organization which,
+conceptually, cannot be implemented within the framework of STL. 
+<p>
+After you've read so far, you don't need more explanation. Here is the code:
+
+<p>
+<h3><span style='color:green'>FILE stlVector2.h:</span></H3>
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+class $1;
+class $2;
+
+// ----------------------------------------------------------
+// description of the cooperating classes
+// ----------------------------------------------------------
+class $$_Vector2Parent : public $$_Vector1Parent {
+friend class $$_Vector2;
+};
+
+class $$_Vector2Child : public $$_Vector1Child {
+friend class $$_Vector2;
+    $1 *parent;
+<HTML>
+<HTML>
+<HTML>
+public:
+    $$_Vector2Child():$$_Vector1Child(){parent=NULL;}
+};
+<HTML>
+<HTML>
+// ----------------------------------------------------------
+
+class $$_Vector2 : public $$_Vector1 {
+public:
+    static $1 *getParent($2 *c);
+
+    static void push_back($1 *p, $2 *c);
+    // .. all other methods of STL vector
+};
+</pre>
+</td></tr></table>
+
+<p>
+<h3><span style='color:green'>FILE stlVector2.cpp:</span></H3>
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFFF99" width="80%"> 
+<pre>
+$1* $$_Vector2::getParent($2 *c){return c->$0.parent;}
+void $$_Vector2::push_back($1 *p, $2 *c){
+    c->$0.parent=p;
+    $$_Vector1::push_back(p,c);
+}    
+</pre>
+</td></tr></table>
+

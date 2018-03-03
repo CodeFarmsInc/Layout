@@ -1,0 +1,5 @@
+// NOTE: You can test with either of the following two statements
+// --------------------------------------------------------
+
+// DataStructure Bag<Root,Part> myBag;
+DataStructure Uni1toX<Root,Part> myBag;

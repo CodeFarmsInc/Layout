@@ -1,0 +1,1 @@
+vi lnkarray.cpp

@@ -1,0 +1,15 @@
+u1-* LinkedList2 Generator Organization orgs ;
+b1-* Aggregate2 Organization Participant parts ;
+u1-* LinkedList2 Generator  OrgType types ;
+b1-* Aggregate2 OrgType PartType partTypes ;
+u1-1 SingleLink OrgType OrgType inherits ;
+u1-* LinkedList1 OrgType Iterator iters ;
+u1-1 SingleLink PartType PartType inhMatch ;
+u1-1 SingleLink FixedType PartType inhFixed ;
+u1-* LinkedList1 OrgType FixedType fixedTypes ;
+u1-1 SingleLink Organization OrgType myType ;
+u1-1 SingleLink Participant PartType myPartType ;
+u1-1 SingleLink ClassLink ApplClass toBase ;
+u1-* Hash Generator ApplClass classes ;
+u1-* LinkedList1 ApplClass ClassLink dependsOn ;
+u1-* Aggregate2 ApplClass Participant usedBy ;

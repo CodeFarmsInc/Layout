@@ -1,0 +1,3 @@
+Association IndexedLinkArray<Department,Employee> eArr;
+Association Name<Employee> eName;
+Association LinkedList1<Department,Employee> eList;

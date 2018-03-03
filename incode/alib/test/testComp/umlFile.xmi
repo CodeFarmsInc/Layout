@@ -1,0 +1,42 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML'
+         timestamp = '1213841101'
+  <XMI.header>
+    <XMI.documentation>
+      <XMI.exporter>CentralControl</XMI.exporter>
+      <XMI.exporterVersion>1.0</XMI.exporterVersion>
+    </XMI.documentation>
+  </XMI.header>
+  <XMI.content>
+    <UML:Model xmi.id = 'umlFile:1000'
+      name = 'umlFile' isSpecification = 'false'
+      isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+      <UML:Namespace.jLib_UML>
+        <UML:Class xmi.id = 'umlFile:1007' name = 'Text'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'umlFile:1008' name = 'Rectangle'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'umlFile:1005' name = 'Editable'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'umlFile:1006' name = 'Line'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'umlFile:1003' name = 'Graphics'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'umlFile:1001' name = 'Picture'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+      </UML:Namespace.jLib_UML>
+    </UML:Model>
+  </XMI.content>
+</XMI>

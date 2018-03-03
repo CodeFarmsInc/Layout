@@ -1,0 +1,2 @@
+    Employee(){
+        printf("???Employee constructor index=%d\n",eArr::index(this)\n");}

@@ -1,0 +1,4 @@
+u1-* SINGLE_COLLECT Root Obj colObj ;
+u1-* SINGLE_COLLECT Obj XXX colXXX ;
+u1-0 Name Obj objType ;
+u1-0 PROPERTY Obj ;

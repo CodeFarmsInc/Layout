@@ -1,0 +1,8 @@
+b1-* Aggregate2 CD Track tracks ;
+u1-* LinkedList2 Library Composer composers ;
+u1-* LinkedList2 Library Performer performers ;
+u1-* LinkedList2 Library CD cds ;
+R*2* M_TO_N Link Track Performer playedBy ;
+b1-* Aggregate2 Composer Work works ;
+b1-* Aggregate2 Work Part parts ;
+b1-1 Aggregate2 Part Track onTrack ;

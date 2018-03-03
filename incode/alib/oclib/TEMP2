@@ -1,0 +1,15 @@
+// ---------------------------------------------------------
+void $$_IndexedLinkArray::init($1 *hp){
+    int i,cap,incr; $2 **arr;
+
+    cap=capacity(hp);
+    incr=increment(hp);
+    arr=$$_LinkArray::head(hp);
+    for(i=0; i<cap; i++){
+        if(arr[i]==NULL)continue;
+        arr[i]->$0.index= -1;
+        arr[i]=NULL;
+    }
+    reset(hp,0,incr);
+}
+// ---------------------------------------------------------

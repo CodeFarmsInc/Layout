@@ -1,0 +1,12 @@
+Person=Tom age=52 salary= 55.35
+Person=Alena age=45 salary=120.30
+Person=Peter age=53 salary= 12.50
+Person=Grace age=73 salary= 11.10
+Person=Gizella age=62 salary= 91.10
+Person=Michael age=65 salary=400.00
+Person=Eva age=19 salary=  9.30
+Person=Adam age=22 salary= 12.50
+
+Adam(22, 12.50) Eva(19,  9.30) child=10
+Michael(65,400.00) Gizella(62, 91.10) child=2
+Peter(53, 12.50) Alena(45,120.30) child=0

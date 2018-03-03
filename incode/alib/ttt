@@ -1,0 +1,5 @@
+#!/bin/sh
+cp js.h gen.h
+cp js.cpp gen.cpp
+g++ codegen.cpp substitu.cpp newsrc.cpp
+mv a.out codegen

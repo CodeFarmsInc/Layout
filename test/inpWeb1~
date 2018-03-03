@@ -1,0 +1,4 @@
+b1-* Aggregate Faculty Department departments ;
+b1-* Aggregate Department Teacher teachers ;
+b1-* Aggregate Department Course courses ;
+b1-* Aggregate Teacher Course teaches ;

@@ -1,0 +1,6 @@
+#!/bin/sh
+./clean
+../../codegen ds.def ../../lib gen
+g++ array_4.cpp
+./a.out > array_4.res
+../diff array_4.res array_4.out

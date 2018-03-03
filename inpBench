@@ -1,0 +1,6 @@
+u1-* LinkedList2 Library Book books ;
+Name Book bookTitle ;
+Name Book bookAbstract ;
+u1-* LinkedList2 Library Author authors ;
+R*2* 2XtoX BookToAuthor Book Author booksToAuthors ;
+Name Author authorName ;

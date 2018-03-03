@@ -1,0 +1,5 @@
+
+//-------------------------------
+// definition of the associations
+//-------------------------------
+Association LinkedList1<Picture,Graphics> parts;

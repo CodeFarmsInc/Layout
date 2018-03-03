@@ -1,0 +1,11 @@
+#include "tmp/eRing.cpp"
+#include "tmp/eName.cpp"
+#include "tmp/rStart.cpp"
+#include "tmp/pHeap.cpp"
+#include "tmp/pHeap1.cpp"
+#include "tmp/eHeap.cpp"
+#include "tmp/eHeap1.cpp"
+#include "tmp/hHeap.cpp"
+#include "tmp/hHeap1.cpp"
+#include "tmp/hPtr.cpp"
+

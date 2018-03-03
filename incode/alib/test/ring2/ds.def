@@ -1,0 +1,8 @@
+
+// ----------------------------------------------
+// definition of the data structures
+// one-to-one correspondence with the UML diagram
+// ----------------------------------------------
+DataStructure Ring2<A> ring1;
+DataStructure Ring2<A> ring2;
+// ----------------------------------------------

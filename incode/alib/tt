@@ -1,0 +1,5 @@
+#!/bin/sh
+cp res.h gen.h
+cp res.cpp gen.cpp
+g++ codegen.cpp substitu.cpp newsrc.cpp
+mv a.out codegen

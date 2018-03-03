@@ -1,0 +1,6 @@
+~!/bin/sh
+./clean
+../..\codegen ds.def ..\..\lib gen
+g++ ring1.cpp
+.\a.out > ring1.res
+../diff ring1.res ring1.out

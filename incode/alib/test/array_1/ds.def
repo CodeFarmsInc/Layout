@@ -1,0 +1,7 @@
+
+DataStructure Ring1<Person> people;
+DataStructure Name<Person> name;
+DataStructure SingleLink<Couple,Person> per1;
+DataStructure SingleLink<Couple,Person> per2;
+DataStructure Array<Header,Couple> arr;
+DataStructure Array<Header,int> cArr;

@@ -1,0 +1,33 @@
+cd testABC
+./tr
+cd ../ring1
+./tr
+cd ../ring2
+./tr
+cd ../stack
+./tr
+cd ../binheap
+./tr
+cd ../hash
+./tr
+cd ../vector
+./tr
+cd ../testComp
+./tr
+cd ../testMany
+./tr
+cd ../Array_1
+./tr
+cd ../Array_2
+./tr
+cd ../Array_3
+./tr
+cd ../Array_4
+./tr
+cd ../Array_5
+./tr
+cd ../Array_6
+./tr
+cd ../Array_7
+./tr
+cd ..

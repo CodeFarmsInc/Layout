@@ -1,0 +1,10 @@
+not in myBag: partID=99
+part=109
+part=101
+part=102
+part=103
+part=104
+part=105
+part=106
+part=107
+part=110

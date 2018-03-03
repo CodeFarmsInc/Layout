@@ -1,0 +1,90 @@
+// ----------------------------------------------------------
+//            3XtoX<Relation,Entity1,Entity2,Entity3>
+//
+// This is a good example how Many-to-Many can be expanded to any
+// number of parameters.
+// ----------------------------------------------------------
+// By repeating this code with minor modifications, it is easy
+// to derive higher order many-to-many relations:
+//    from 2XtoX to derive 2XtoX (this code)
+//    from 2XtoX to derive 3XtoX
+//    from 3XtoX to derive 4XtoX
+//    ... and so on ...
+//                                    Jiri Soukup, July 14, 2005
+// ----------------------------------------------------------
+
+// ----------------------------------------------------------
+#ifndef ZZ_$$_3XTOX_INCLUDED
+#define ZZ_$$_3XTOX_INCLUDED
+
+@class $1;
+@class $2;
+@class $3;
+@class $4;
+
+// description of the cooperating classes
+#define $$_3XtoXRelation \
+    $$_2XtoXRelation; \
+    $1* $$_next3; \
+    $1* $$_prev3; \
+    $4* $$_parent3
+
+#define $$_3XtoXEntity1 \
+    $$_2XtoXEntity1 
+
+#define $$_3XtoXEntity2 \
+    $$_2XtoXEntity2 
+
+#define $$_3XtoXEntity3 \
+    $1* $$_tail3
+// ----------------------------------------------------------
+#define $$_3XtoXRelation_ptrList \
+    $$_2XtoXRelation_ptrList; \
+    $0.next3=ONE; \
+    $0.prev3=ONE; \
+    $0.parent3=ONE
+
+#define $$_3XtoXEntity1_ptrList \
+    $$_2XtoXEntity1_ptrList 
+
+#define $$_3XtoXEntity2_ptrList \
+    $$_2XtoXEntity2_ptrList 
+
+#define $$_3XtoXEntity3_ptrList \
+    $0.tail3=ONE
+
+
+// ----------------------------------------------------------
+
+@interface $$_3XtoX : $$_2XtoX 
+  // +add is an equivalent of addTail()
++ (void) add: ($1*) r ent1: ($2*) e1 ent2: ($3*) e2 ent3: ($4*) e3; 
++ (void) remove: ($1*) r;
++ ($2*)  entity1: ($1*) r;
++ ($3*)  entity2: ($1*) r;
++ ($4*)  entity3: ($1*) r;
++ ($1*)  next1: ($1*) r;
++ ($1*)  prev1: ($1*) r;
++ ($1*)  next2: ($1*) r;
++ ($1*)  prev2: ($1*) r;
++ ($1*)  next3: ($1*) r;
++ ($1*)  prev3: ($1*) r;
+@end
+
+@interface $$_3XtoXIterator : $$_2XtoXIterator 
+{
+    // standard interface: for(r=[it from1: e1]; r; r=[it next1]){...}
+    // standard interface: for(r=[it from2: e2]; r; r=[it next2]){...}
+    // standard interface: for(r=[it from3: e3]; r; r=[it next3]){...}
+    $1 *tail3;
+    $1 *nxt3;
+}
+- ($1*) from1: ($2*) e;
+- ($1*) next1;
+- ($1*) from2: ($3*) e;
+- ($1*) next2;
+- ($1*) from3: ($4*) e;
+- ($1*) next3;
+@end
+
+#endif // ZZ_$$_3XTOX_INCLUDED

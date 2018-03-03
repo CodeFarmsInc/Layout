@@ -1,0 +1,90 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd"
+><svg xmlns="http://www.w3.org/2000/svg">
+  <title>(null)</title>
+  <desc>Automatically generated UML diagram</desc>
+  <rect x="142" y="45" width="98" height="36" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="149" y="62" style="fill:black; stroke:none; font-size:12;">
+    Company
+  </text>
+  <line x1="171" y1="126" x2="89" y2="126" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="95" y="122" style="fill:black; stroke:none; font-size:10;">
+    warehouses
+  </text>
+  <text x="127" y="137" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="209" y1="126" x2="293" y2="126" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="223" y="122" style="fill:black; stroke:none; font-size:10;">
+    products
+  </text>
+  <text x="248" y="137" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="171" y1="126" x2="171" y2="81" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="175" y="92" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="209" y1="126" x2="209" y2="81" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="213" y="92" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="89" y1="126" x2="89" y2="171" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="89" y1="171" x2="85" y2="164" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="89" y1="171" x2="93" y2="164" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="93" y="167" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="293" y1="126" x2="293" y2="171" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="293" y1="171" x2="289" y2="164" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="293" y1="171" x2="297" y2="164" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="297" y="167" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="37" y="171" width="98" height="36" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="188" style="fill:black; stroke:none; font-size:12;">
+    Warehouse
+  </text>
+  <rect x="247" y="171" width="98" height="36" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="254" y="188" style="fill:black; stroke:none; font-size:12;">
+    Product
+  </text>
+  <text x="254" y="203" style="fill:black; stroke:none; font-size:10;">
+     Name:prodName
+  </text>
+  <line x1="89" y1="252" x2="171" y2="252" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="109" y="248" style="fill:black; stroke:none; font-size:10;">
+    stored
+  </text>
+  <text x="127" y="263" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="293" y1="252" x2="209" y2="252" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="230" y="248" style="fill:black; stroke:none; font-size:10;">
+    needed
+  </text>
+  <text x="248" y="263" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="89" y1="252" x2="89" y2="207" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="93" y="218" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="293" y1="252" x2="293" y2="207" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="297" y="218" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="171" y1="252" x2="171" y2="297" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="171" y1="297" x2="167" y2="290" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="171" y1="297" x2="175" y2="290" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="175" y="293" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="209" y1="252" x2="209" y2="297" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="209" y1="297" x2="205" y2="290" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="209" y1="297" x2="213" y2="290" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="213" y="293" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="142" y="297" width="98" height="36" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="149" y="314" style="fill:black; stroke:none; font-size:12;">
+    PartType
+  </text>
+  <text x="146" y="374" style="fill:black; stroke:none; font-size:10;">
+    assemble
+  </text>
+  <text x="171" y="389" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="206" y1="378" x2="206" y2="346"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 206,333 L 214,346 L 198,346 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="174" y1="378" x2="174" y2="333" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="174" y1="333" x2="178" y2="339" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="174" y1="333" x2="170" y2="339" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="178" y="344" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="206" y1="378" x2="206" y2="423" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="174" y1="378" x2="174" y2="423" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="178" y="419" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <rect x="142" y="423" width="98" height="36" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="149" y="440" style="fill:black; stroke:none; font-size:12;">
+    Assembly
+  </text>
+</svg>

@@ -1,0 +1,79 @@
+
+// -------------------------------------------------------------------------
+//       Definition of data structures for program 'codegen'
+//          the code generator for the IN_CODE modelling
+// -------------------------------------------------------------------------
+// Aggregate2 is used here only to test the data structure.
+// If you replace 'Aggregate2' by 'LinkedLink2' the program compiles and runs
+// without any change, because the link child-to-parent is not used 
+// anywhere in the codegenerator code.
+
+// The comments show the data for the following statement
+//   DataStructure LinkedList2<Generator,Organization> orgs;
+// and in registry
+//   LinkedList2<LinkedList2Parent,LinkedList2Child> llist2 :Ring2<$2> Iterator;
+// -------------------------------------------------------------------------
+
+// DataStructure statements
+
+DataStructure LinkedList2<Generator, Organization> orgs;  // orgs
+DataStructure Aggregate2<Organization,Participant> parts; // what is inside <>
+DataStructure Name<Organization> orgName; // orgs
+DataStructure Name<Participant> partName; // Generator, Organization
+
+// Registry records
+
+DataStructure LinkedList2<Generator, OrgType> types; // LinkedList2
+DataStructure Aggregate2<OrgType,PartType> partTypes;// what is inside <>
+DataStructure SingleLink<OrgType,OrgType> inherits;  // Ring2
+DataStructure LinkedList1<OrgType,Iterator> iters;   // Iterator
+DataStructure Name<OrgType> orgTypeName;             // LinkedList2
+DataStructure Name<OrgType> fileName;                // llist2
+DataStructure Name<PartType> partTypeName;  // Linked..Parent, Linked..Child
+DataStructure Name<Iterator> iterName;      // Iterator
+DataStructure Name<PartType> inhName;       // working field - see below
+DataStructure Name<FixedType> fixedName;    // for base class, when not $x
+DataStructure SingleLink<PartType,PartType> inhMatch;
+                                               // LinkList2Child->Ring2Parent
+DataStructure SingleLink<FixedType,PartType> inhFixed; // - see below 
+DataStructure LinkedList1<OrgType,FixedType> fixedTypes;   // see below
+
+// Links between the two domains
+
+DataStructure SingleLink<Organization,OrgType> myType;   // orgx->LinkedList2
+DataStructure SingleLink<Participant,PartType> myPartType;
+
+// Unique representation of application classes, needed only for UML interface
+
+DataStructure SingleLink<ClassLink,ApplClass> toBase;
+DataStructure Hash<Generator,ApplClass> classes;
+DataStructure LinkedList1<ApplClass,ClassLink> dependsOn;
+DataStructure Aggregate2<ApplClass,Participant> usedBy;
+DataStructure Name<ApplClass> cName;
+
+
+// -------------------------------------------------------------------------
+// 'inhName' is temporarily used to store the parameters of the base classes
+//
+// Consider
+//   DataStructure ABC<X,Y,Z> myDS;
+// and in registry
+//   GHI<C1> abcFile Iterator;
+//   DEF<B1,B2,B3,B4> abcFile :GHI<$3> Iterator;
+//   ABC<A1,A2,A3> abcFile :DEF<$2,classV,$1,classW> Iterator;
+//
+// The internal record after reading the registry looks like this:
+//
+// OrgType=ABC  fixedTypes: fixedType=classV inhFixed->B2
+//                          fixedType=classW inhFixed->B4
+//      PartType=A1 inhMatch->B3 inhName=0
+//      PartType=A2 inhMatch->B1 inhName=0
+//      PartType=A3 inhMatch->0  inhName=0
+// OrgType=DEF  fixedTypes=N/A  
+//      PartType=B1 inhMatch->0  inhName=0
+//      PartType=B2 inhMatch->0  inhName=0
+//      PartType=B3 inhMatch->C1 inhName=0
+//      PartType=B4 inhMatch->0  inhName=0
+// OrgType=GHI  fixedTypes=N/A 
+//  
+

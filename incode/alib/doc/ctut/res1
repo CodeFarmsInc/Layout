@@ -1,0 +1,9 @@
+dept=100 manager=C.Black
+   dept=110 manager=A.Green
+      J.Fox
+      K.Doe
+      dept=111 manager=B.Brown
+         S.Winter
+         I.Springer
+         B.Summers
+   dept=120 manager=B.White

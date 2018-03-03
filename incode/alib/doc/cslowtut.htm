@@ -1,0 +1,711 @@
+
+<HTML>
+<HEAD>
+<Title> Slow-route branch of the C++ tutorial </TITLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE>
+
+<font size="4">
+<A HREF="index.html">    [homePage] </A>
+<A HREF="doc.htm">   - [docum] </A>
+<A HREF="src.htm">   - [source] </A>
+<A HREF="test.htm">  - [testing] </A>
+<A HREF="exper.htm"> - [experience] </A>
+<hr>
+<font size="4">
+<B>
+
+<H2>Slow route of implementing a new association from scratch</H2>
+
+As we did in the previous sections, we will explain everything on simple,
+practical examples. As the first step, let's implement class LinkedList2
+shown in the following diagram. This is an intrusive implementation of
+the one-to-many relation which also can be used as uni-directional set.
+This is a doubly-linked list for which the operation remove() is super fast.
+<p>
+For educational purposes, this tutorial derives the generic form of the
+class in several steps. Don't be discouraged - when you do this routinely,
+you will use only the short final form with $$, $0, $1 and $2 parameters.
+The reason for long listings of the code below is that I included the full
+operational source. I know how easy it is to get stuck on something
+small and seemingly unimportant when you deal with a completely different
+coding style.
+<p>
+We will implement this association from scratch, without refering to
+other associations.
+Note that alib already contains class LinkedList2 which is implemented
+differently - not from scratch but re-using a simlpler association called Ring2.
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut9.jpg" ALIGN="top">
+</div>
+<p>
+The association class that should go into alib library must be generic,
+which means parametrized in such a way that it could be used for any given
+pair of classes, for Department and Employee, Company and Product, and so on.
+Instead of aiming at such a high goal,
+let's implement this data structure for two concrete classes, 
+Parent and Child. This is a simple exercise most of us
+did in the first year programming course:
+<pre>
+    #include &gtstdio.h&lt
+    class LinkedList2;
+
+    class Component {
+    friend class LinkedList2;
+    friend class LinkedList2Iterator;
+        char *cName; // not used in LinkedList2, only for the testing
+        Component *next;
+        Component *prev;
+    public:
+        Component(char *name){next=prev=NULL; cName=name;}
+        void prt(){printf("   %s\n",cName);}
+    };
+
+    class Product {
+    friend class LinkedList2;
+    friend class LinkedList2Iterator;
+        char *pName; // not used in LinkedList2, only for the testing
+        Component *tail;
+    public:
+        Product(char *name){tail=NULL; pName=name;}
+        void prt(){printf("%s\n",pName);}
+    };
+
+    // class which controls the association but keeps no data
+    class LinkedList2 {
+    public:
+        static void addTail(Product *p,Component *c);
+        static void addHead(Product *p,Component *c);
+        static void remove(Product *p,Component *c);
+        // ... more methods
+    };
+
+    // iterator which helps to traverse all children
+    class LinkedList2Iterator {
+        int forward;
+        Component *nxt;
+        Product *par;
+    public:
+        LinkedList2Iterator(){forward=1; nxt=NULL; par=NULL;}
+        Component *fromHead(Product *p);
+        Component *fromTail(Product *p);
+        Component *next(); // traverses forward or backward
+    };
+
+    // -------------------------------------------------------------
+    // Product *p; Component *c;
+    // forward traversing: for(c=it.fromHead(); c; c=it.next()){...}
+    // reverse traversing: for(c=it.fromTail(); c; c=it.next()){...}
+    // -------------------------------------------------------------
+
+    void LinkedList2::addTail(Product *p,Component *c){
+        Component *c1,*c2;
+
+        if(c->next){
+            printf("LinkedList2::addTail() error: child already in a list\n");
+            return;
+        }
+        c1=p->tail;
+        if(c1){ 
+            c2=c1->next;
+            c1->next=c; c->next=c2;
+            c2->prev=c; c->prev=c1;
+        }
+        else {c->next=c->prev=c;}
+        p->tail=c;
+    }
+    void LinkedList2::addHead(Product *p,Component *c){
+        Component *c1,*c2;
+
+        addTail(p,c);
+        if(p->tail)p->tail=p->tail->prev;
+    }
+
+    void LinkedList2::remove(Product *p,Component *c){
+        if(c->next==c){p->tail=c->prev=c->next=NULL; return;}
+        if(p->tail==c)p->tail=c->prev;
+        c->next->prev=c->prev;
+        c->prev->next=c->next;
+        c->prev=c->next=NULL;
+    }
+
+    Component* LinkedList2Iterator::fromHead(Product *p){
+        Component *ret;
+
+        forward=1;
+        par=p;
+        if(p->tail==NULL)return NULL;
+        ret=p->tail->next;
+        nxt=ret->next;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    Component* LinkedList2Iterator::fromTail(Product *p){
+        Component *ret;
+
+        forward=0;
+        par=p;
+        ret=p->tail;
+        if(ret==NULL)return NULL;
+        nxt=ret->prev;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    Component* LinkedList2Iterator::next(){
+        Component *ret;
+
+        ret=nxt;
+        if(!ret)return NULL;
+        if(forward){
+            if(ret==par->tail)nxt=NULL;
+            else nxt=ret->next;
+        }
+        else {
+            nxt=ret->prev;
+            if(nxt==par->tail)nxt=NULL;
+        }
+        return ret;
+    }
+            
+    int main(){
+        Product *p; Component *c,*cMot; 
+        LinkedList2Iterator it;
+
+        p=new Product("bicycle");
+        // load several colour to the list
+        c=new Component("wheel"); LinkedList2::addTail(p,c);
+        c=new Component("pedal"); LinkedList2::addTail(p,c);
+        c=new Component("handlebar"); LinkedList2::addTail(p,c);
+        c=new Component("motor"); LinkedList2::addTail(p,c);
+        cMot=c; // remember the 'motor' component
+        c=new Component("chain"); LinkedList2::addTail(p,c);
+        c=new Component("frame"); LinkedList2::addTail(p,c);
+
+        // remove the 'motor' from the component list
+        LinkedList2::remove(p,cMot);
+
+        // print the resulting list
+        printf("Product: "); p->prt();
+        for(c=it.fromHead(p); c; c=it.next()){
+            c->prt();
+        }
+        return 0;
+    }
+</pre>
+<p>
+Before we turn LinkedList2 into a generic class, let's make a relatively
+minor changes in how it is implemented:
+<UL>
+<LI>For each participating class, we insert all the data structure pointers
+as a group (formally a class member) which we
+always call an arbitrarily chosen name, ZZds.
+<LI>Since we want this style to be compatible with Java which does not
+have the 'friend' feature, we make all data structure pointers public.
+This may appear unsafe, but as you will see later they will be trasparent
+to the user thus the probablility that someone would use or touch them 
+by accident is minimal.
+</UL>
+<p>
+<div align='center'>
+<IMG SRC="ctut/ctut10.jpg" ALIGN="top">
+</div>
+<p>
+<pre>
+    #include &gtstdio.h&lt
+    class LinkedList2;
+    <span style='color:red'>class Component;
+    class Product;
+
+    class LinkedList2Child {
+    public:
+        LinkedList2Child(){next=prev=NULL;}
+        Component *next; // moved to here from Component
+        Component *prev; // moved to here from Component
+    };
+        
+    class LinkedList2Parent {
+    public:
+        LinkedList2Parent(){tail=NULL;}
+        Component *tail; // moved to here from Product
+    };</span>
+
+
+    class Component {
+        char *cName; // not used in LinkedList2, only for the testing
+    public:
+        <span style='color:red'>LinkedList2Child ZZds</span>;
+        Component(char *name){cName=name;}
+        void prt(){printf("   %s\n",cName);}
+    };
+
+    class Product {
+        char *pName; // not used in LinkedList2, only for the testing
+    public:
+        <span style='color:red'>LinkedList2Parent ZZds</span>;
+        Product(char *name){pName=name;}
+        void prt(){printf("%s\n",pName);}
+    };
+
+    // class which controls the association but keeps no data
+    class LinkedList2 {
+    public:
+        static void addTail(Product *p,Component *c);
+        static void addHead(Product *p,Component *c);
+        static void remove(Product *p,Component *c);
+        // ... more methods
+    };
+
+    // iterator which helps to traverse all children
+    class LinkedList2Iterator {
+        int forward;
+        Component *nxt;
+        Product *par;
+    public:
+        LinkedList2Iterator(){forward=1; nxt=NULL; par=NULL;}
+        Component *fromHead(Product *p);
+        Component *fromTail(Product *p);
+        Component *next(); // traverses forward or backward
+    };
+
+    // -------------------------------------------------------------
+    // Product *p; Component *c;
+    // forward traversing: for(c=it.fromHead(); c; c=it.next()){...}
+    // reverse traversing: for(c=it.fromTail(); c; c=it.next()){...}
+    // -------------------------------------------------------------
+
+    void LinkedList2::addTail(Product *p,Component *c){
+        Component *c1,*c2;
+
+        if(c-><span style='color:red'>ZZds</span>.next){
+            printf("LinkedList2::addTail() error: child already in a list\n");
+            return;
+        }
+        c1=p-><span style='color:red'>ZZds</span>.tail;
+        if(c1){ 
+            c2=c1-><span style='color:red'>ZZds</span>.next;
+            c1-><span style='color:red'>ZZds</span>.next=c; c->ZZds.next=c2;
+            c2-><span style='color:red'>ZZds</span>.prev=c; c->ZZds.prev=c1;
+        }
+        else {c-><span style='color:red'>ZZds</span>.next=c->ZZds.prev=c;}
+        p-><span style='color:red'>ZZds</span>.tail=c;
+    }
+    void LinkedList2::addHead(Product *p,Component *c){
+        Component *c1,*c2;
+
+        addTail(p,c);
+        if(p-><span style='color:red'>ZZds</span>.tail)p->ZZds.tail=p->ZZds.tail->ZZds.prev;
+    }
+
+    void LinkedList2::remove(Product *p,Component *c){
+        if(c-><span style='color:red'>ZZds</span>.next==c){
+            p-><span style='color:red'>ZZds</span>.tail=c->ZZds.prev=c->ZZds.next=NULL;
+            return;
+        }
+        if(p-><span style='color:red'>ZZds</span>.tail==c)p->ZZds.tail=c->ZZds.prev;
+        c-><span style='color:red'>ZZds</span>.next->ZZds.prev=c->ZZds.prev;
+        c-><span style='color:red'>ZZds</span>.prev->ZZds.next=c->ZZds.next;
+        c-><span style='color:red'>ZZds</span>.prev=c->ZZds.next=NULL;
+    }
+
+    Component* LinkedList2Iterator::fromHead(Product *p){
+        Component *ret;
+
+        forward=1;
+        par=p;
+        if(p-><span style='color:red'>ZZds</span>.tail==NULL)return NULL;
+        ret=p-><span style='color:red'>ZZds</span>.tail->ZZds.next;
+        nxt=ret-><span style='color:red'>ZZds</span>.next;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    Component* LinkedList2Iterator::fromTail(Product *p){
+        Component *ret;
+
+        forward=0;
+        par=p;
+        ret=p-><span style='color:red'>ZZds</span>.tail;
+        if(ret==NULL)return NULL;
+        nxt=ret-><span style='color:red'>ZZds</span>.prev;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    Component* LinkedList2Iterator::next(){
+        Component *ret;
+
+        ret=nxt;
+        if(!ret)return NULL;
+        if(forward){
+            if(ret==par-><span style='color:red'>ZZds</span>.tail)nxt=NULL;
+            else nxt=ret-><span style='color:red'>ZZds</span>.next;
+        }
+        else {
+            nxt=ret-><span style='color:red'>ZZds</span>.prev;
+            if(nxt==par-><span style='color:red'>ZZds</span>.tail)nxt=NULL;
+        }
+        return ret;
+    }
+            
+    int main(){
+        Product *p; Component *c,*cMot; 
+        LinkedList2Iterator it;
+
+        p=new Product("bicycle");
+        // load several colour to the list
+        c=new Component("wheel"); LinkedList2::addTail(p,c);
+        c=new Component("pedal"); LinkedList2::addTail(p,c);
+        c=new Component("handlebar"); LinkedList2::addTail(p,c);
+        c=new Component("motor"); LinkedList2::addTail(p,c);
+        cMot=c; // remember the 'motor' component
+        c=new Component("chain"); LinkedList2::addTail(p,c);
+        c=new Component("frame"); LinkedList2::addTail(p,c);
+
+        // remove the 'motor' from the component list
+        LinkedList2::remove(p,cMot);
+
+        // print the resulting list
+        printf("Product: "); p->prt();
+        for(c=it.fromHead(p); c; c=it.next()){
+            c->prt();
+        }
+        return 0;
+    }
+</pre>
+<p>
+As you can see, except for the introduction of classes LinkedList2Parent and 
+LinkedLIst2Child, the only change in the code is that the data structure
+pointers must be accessed through ZZds. For example instead p->tail,
+you have to use p->ZZds.tail.
+<p>
+Note that classes ...Parent and ...Child can include more complex data
+such as arrays.
+<p>
+Finally we are ready to implement a generic class LinkedList2 which can
+go into our association library, alib.
+We first extract all code relevant to LinkedLIst2
+and its iterator, and store them in two files.
+<p>
+<H4><span style='color:green'>FILE llist2.h</span></H4>
+<pre>
+    #infdef ZZ_LINKED_LIST2_INCLUDED
+    #define ZZ_LINKED_LIST2_INCLUDED
+    class LinkedList2Parent {
+    public:
+        LinkedList2Parent(){tail=NULL;}
+        Component *tail; // moved to here from Product
+    };
+
+    class LinkedList2Child {
+    public:
+        LinkedList2Child(){next=prev=NULL;}
+        Component *next; // moved to here from Component
+        Component *prev; // moved to here from Component
+    };
+
+    class LinkedList2 {
+    public:
+        static void addTail(Product *p,Component *c);
+        static void addHead(Product *p,Component *c);
+        static void remove(Product *p,Component *c);
+        // ... more methods
+    };
+
+    class LinkedList2Iterator {
+        int forward;
+        Component *nxt;
+        Product *par;
+    public:
+        LinkedList2Iterator(){forward=1; nxt=NULL; par=NULL;}
+        Component *fromHead(Product *p);
+        Component *fromTail(Product *p);
+        Component *next(); // traverses forward or backward
+    };
+    #endif // ZZ_LINKED_LIST2_INCLUDED
+</pre>
+<H4><span style='color:green'>FILE llist2.cpp</span></H4>
+<pre>
+    void LinkedList2::addTail(Product *p,Component *c){
+        Component *c1,*c2;
+
+        if(c->ZZds.next){
+            printf("LinkedList2::addTail() error: child already in a list\n");
+            return;
+        }
+        c1=p->ZZds.tail;
+        if(c1){ 
+            c2=c1->ZZds.next;
+            c1->ZZds.next=c; c->ZZds.next=c2;
+            c2->ZZds.prev=c; c->ZZds.prev=c1;
+        }
+        else {c->ZZds.next=c->ZZds.prev=c;}
+        p->ZZds.tail=c;
+    }
+    void LinkedList2::addHead(Product *p,Component *c){
+        Component *c1,*c2;
+
+        addTail(p,c);
+        if(p->ZZds.tail)p->ZZds.tail=p->ZZds.tail->ZZds.prev;
+    }
+
+    void LinkedList2::remove(Product *p,Component *c){
+        if(c->ZZds.next==c){
+            p->ZZds.tail=c->ZZds.prev=c->ZZds.next=NULL;
+            return;
+        }
+        if(p->ZZds.tail==c)p->ZZds.tail=c->ZZds.prev;
+        c->ZZds.next->ZZds.prev=c->ZZds.prev;
+        c->ZZds.prev->ZZds.next=c->ZZds.next;
+        c->ZZds.prev=c->ZZds.next=NULL;
+    }
+
+    Component* LinkedList2Iterator::fromHead(Product *p){
+        Component *ret;
+
+        forward=1;
+        par=p;
+        if(p->ZZds.tail==NULL)return NULL;
+        ret=p->ZZds.tail->ZZds.next;
+        nxt=ret->ZZds.next;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    Component* LinkedList2Iterator::fromTail(Product *p){
+        Component *ret;
+
+        forward=0;
+        par=p;
+        ret=p->ZZds.tail;
+        if(ret==NULL)return NULL;
+        nxt=ret->ZZds.prev;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    Component* LinkedList2Iterator::next(){
+        Component *ret;
+
+        ret=nxt;
+        if(!ret)return NULL;
+        if(forward){
+            if(ret==par->ZZds.tail)nxt=NULL;
+            else nxt=ret->ZZds.next;
+        }
+        else {
+            nxt=ret->ZZds.prev;
+            if(nxt==par->ZZds.tail)nxt=NULL;
+        }
+        return ret;
+    }
+</pre>
+The modifications which we have to make
+are mechanical and you can implemented them by globally replacing
+certain text strings (even when they are a part of longer word):
+<UL>
+<LI>Replace LinkedList2 by $$_LinkedList2
+<LI>Replace LINKED_LIST2 by $$_LINKED_LIST2
+<LI>Replace ZZds by $0
+<LI>Replace Product by $1 
+<LI>Replace Component by $2
+</UL>
+<span style='color:blue'>The resulting code is crisp, compact, and easy to maintain.
+You will quickly get used to writing new associations in this style 
+without the global editing</span>
+which I introduced mostly for educational purposes. 
+Note that $1 and $2 refer to the first and second parameters in 
+how this association will be used:
+<pre>
+    Association LinkedList2&ltProduct,Component&gt assembly;
+</pre>
+After you make these replacements, you can move the new code to alib/lib.
+The only thing remains -- you have to register this class in the alib/registry
+file. This is a one-line record, anywhere in that file. 
+<pre>
+    u1-* LinkedList2&ltLinkedList2Parent,LinkedList2Child&gt llist2 Iterator;
+</pre>
+The first 4 characters record that this is a uni-directional one-to-many
+association
+(b=bi-directional, U=uni-directional default, B=bi-directional default).
+
+
+<p>
+<H4><span style='color:green'>FILE llist2.h</span></H4>
+<pre>
+    #infdef ZZ_<span style='color:red'>$$_</span>LINKED_LIST2_INCLUDED
+    #define ZZ_<span style='color:red'>$$_</span>LINKED_LIST2_INCLUDED
+    class <span style='color:red'>$$_</span>LinkedList2Parent {
+    public:
+        <span style='color:red'>$$_</span>LinkedList2Parent(){tail=NULL;}
+        <span style='color:red'>$2</span> *tail;
+    };
+
+    class <span style='color:red'>$$_</span>LinkedList2Child {
+    public:
+        <span style='color:red'>$$_</span>LinkedList2Child(){next=prev=NULL;}
+        <span style='color:red'>$2</span> *next;
+        <span style='color:red'>$2</span> *prev;
+    };
+
+    class <span style='color:red'>$$_</span>LinkedList2 {
+    public:
+        static void addTail(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c);
+        static void addHead(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c);
+        static void remove(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c);
+        // ... more methods
+    };
+
+    class <span style='color:red'>$$_</span>LinkedList2Iterator {
+        int forward;
+        <span style='color:red'>$2</span> *nxt;
+        <span style='color:red'>$1</span> *par;
+    public:
+        <span style='color:red'>$$_</span>LinkedList2Iterator(){forward=1; nxt=NULL; par=NULL;}
+        <span style='color:red'>$2</span> *fromHead(<span style='color:red'>$1</span> *p);
+        <span style='color:red'>$2</span> *fromTail(<span style='color:red'>$1</span> *p);
+        <span style='color:red'>$2</span> *next(); // traverses forward or backward
+    };
+    #endif // ZZ_<span style='color:red'>$$_</span>LINKED_LIST2_INCLUDED
+</pre>
+<H4><span style='color:green'>FILE llist2.cpp</span></H4>
+<pre>
+    void <span style='color:red'>$$_</span>LinkedList2::addTail(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c){
+        <span style='color:red'>$2</span> *c1,*c2;
+
+        if(c-><span style='color:red'>$0</span>.next){
+            printf("<span style='color:red'>$$_</span>LinkedList2::addTail() error: child already in a list\n");
+            return;
+        }
+        c1=p-><span style='color:red'>$0</span>.tail;
+        if(c1){ 
+            c2=c1-><span style='color:red'>$0</span>.next;
+            c1-><span style='color:red'>$0</span>.next=c; c-><span style='color:red'>$0</span>.next=c2;
+            c2-><span style='color:red'>$0</span>.prev=c; c-><span style='color:red'>$0</span>.prev=c1;
+        }
+        else {c-><span style='color:red'>$0</span>.next=c-><span style='color:red'>$0</span>.prev=c;}
+        p-><span style='color:red'>$0</span>.tail=c;
+    }
+    void <span style='color:red'>$$_</span>LinkedList2::addHead(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c){
+        <span style='color:red'>$2</span> *c1,*c2;
+
+        addTail(p,c);
+        if(p-><span style='color:red'>$0</span>.tail)p-><span style='color:red'>$0</span>.tail=p-><span style='color:red'>$0</span>.tail-><span style='color:red'>$0</span>.prev;
+    }
+
+    void <span style='color:red'>$$_</span>LinkedList2::remove(<span style='color:red'>$1</span> *p,<span style='color:red'>$2</span> *c){
+        if(c-><span style='color:red'>$0</span>.next==c){
+            p-><span style='color:red'>$0</span>.tail=c-><span style='color:red'>$0</span>.prev=c-><span style='color:red'>$0</span>.next=NULL;
+            return;
+        }
+        if(p-><span style='color:red'>$0</span>.tail==c)p-><span style='color:red'>$0</span>.tail=c-><span style='color:red'>$0</span>.prev;
+        c-><span style='color:red'>$0</span>.next-><span style='color:red'>$0</span>.prev=c-><span style='color:red'>$0</span>.prev;
+        c-><span style='color:red'>$0</span>.prev-><span style='color:red'>$0</span>.next=c-><span style='color:red'>$0</span>.next;
+        c-><span style='color:red'>$0</span>.prev=c-><span style='color:red'>$0</span>.next=NULL;
+    }
+
+    <span style='color:red'>$2</span>* <span style='color:red'>$$_</span>LinkedList2Iterator::fromHead(<span style='color:red'>$1</span> *p){
+        <span style='color:red'>$2</span> *ret;
+
+        forward=1;
+        par=p;
+        if(p-><span style='color:red'>$0</span>.tail==NULL)return NULL;
+        ret=p-><span style='color:red'>$0</span>.tail-><span style='color:red'>$0</span>.next;
+        nxt=ret-><span style='color:red'>$0</span>.next;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    <span style='color:red'>$2</span>* <span style='color:red'>$$_</span>LinkedList2Iterator::fromTail(<span style='color:red'>$1</span> *p){
+        <span style='color:red'>$2</span> *ret;
+
+        forward=0;
+        par=p;
+        ret=p-><span style='color:red'>$0</span>.tail;
+        if(ret==NULL)return NULL;
+        nxt=ret-><span style='color:red'>$0</span>.prev;
+        if(nxt==ret)nxt=NULL;
+        return ret;
+    }
+
+    <span style='color:red'>$2</span>* <span style='color:red'>$$_</span>LinkedList2Iterator::next(){
+        <span style='color:red'>$2</span> *ret;
+
+        ret=nxt;
+        if(!ret)return NULL;
+        if(forward){
+            if(ret==par-><span style='color:red'>$0</span>.tail)nxt=NULL;
+            else nxt=ret-><span style='color:red'>$0</span>.next;
+        }
+        else {
+            nxt=ret-><span style='color:red'>$0</span>.prev;
+            if(nxt==par-><span style='color:red'>$0</span>.tail)nxt=NULL;
+        }
+        return ret;
+    }
+</pre>
+After you move files llist2.h and llist2.cpp into alib/lib,
+you can use your new association:
+<pre>
+    #include &ltstdio.h&gt
+    <span style='color:red'>#include "gen.h"</span>
+
+    class Component {
+        char *cName; // not used in LinkedList2, only for the testing
+    public:
+        <span style='color:red'>ZZ_Component ZZds;</span>
+        Component(char *name){cName=name;}
+        void prt(){printf("   %s\n",cName);}
+    };
+
+    class Product {
+        char *pName; // not used in LinkedList2, only for the testing
+    public:
+        <span style='color:red'>ZZ_Product ZZds;</span>
+        Product(char *name){pName=name;}
+        void prt(){printf("%s\n",pName);}
+    };
+
+    <span style='color:red'>Association LinkedList2<Product,Component> assembly;</span>
+            
+    int main(){
+        Product *p; Component *c,*cMot; 
+        <span style='color:red'>assembly_</span>Iterator it;
+
+        p=new Product("bicycle");
+        // load several colour to the list
+        c=new Component("wheel"); <span style='color:red'>assembly</span>::addTail(p,c);
+        c=new Component("pedal"); <span style='color:red'>assembly</span>::addTail(p,c);
+        c=new Component("handlebar"); <span style='color:red'>assembly</span>::addTail(p,c);
+        c=new Component("motor"); <span style='color:red'>assembly</span>::addTail(p,c);
+        cMot=c; // remember the 'motor' component
+        c=new Component("chain"); <span style='color:red'>assembly</span>::addTail(p,c);
+        c=new Component("frame"); <span style='color:red'>assembly</span>::addTail(p,c);
+
+        // remove the 'motor' from the component list
+        <span style='color:red'>assembly</span>::remove(p,cMot);
+
+        // print the resulting list
+        printf("Product: "); p->prt();
+        for(c=it.fromHead(p); c; c=it.next()){
+            c->prt();
+        }
+        return 0;
+    }
+    #include "gen.cpp"</span>
+</pre>
+WARNING: Do not(!) move this class into alib, unless you really want
+to replace class LinkedList2 which is already there. That class has been
+derived from Ring2 and has much more functionality including sorting,
+spliting, or merging of collections.
+<p>
+
+<H2>&nbsp;USE "BACK" FOR RETURN TO THE MAIN TUTORIAL</H2>
+</B>
+</font>
+</BLOCKQUOTE>
+</BODY>
+</HTML>

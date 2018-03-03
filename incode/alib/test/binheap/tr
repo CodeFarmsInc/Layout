@@ -1,0 +1,6 @@
+#!/bin/sh
+./clean
+../../codegen ds.def ../../lib gen
+g++ binheap.cpp
+./a.out binheap.inp binheap.res
+../diff binheap.res binheap.out

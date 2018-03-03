@@ -1,0 +1,11 @@
+
+// ----------------------------------------------
+// definition of the data structures
+// one-to-one correspondence with the UML diagram
+// ----------------------------------------------
+Association 1XtoX<Mark,Student> marks;
+Association 2XtoX<Takes,Student,Course> takes;
+Association 3XtoX<Took,Student,Course,Year> byYear;
+Association Name<Student> sName;
+Association Name<Course> cName;
+// ----------------------------------------------

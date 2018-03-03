@@ -1,0 +1,7 @@
+#!/bin/sh
+rm array_2.res
+rm gen.*
+rm tmp/*.cpp
+rm tmp/*.h
+rm *.
+rm a.out

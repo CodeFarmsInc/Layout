@@ -1,0 +1,5 @@
+
+DataStructure Hash<Company,Employee> byName;
+DataStructure Hash<Company,Employee> byID;
+DataStructure Name<Employee> eName;
+DataStructure LinkedList1<Company,Employee> eList;

@@ -1,0 +1,17 @@
+b*2* 2XtoX Latka Obsah StavBreberky obsahRel ;
+u1-* LinkedList1 MetDB Latka latky ;
+u1-* LinkedList1 Breberka BioAktivita bioAktivity ;
+u1-* LinkedList1 MetDB Breberka breberky ;
+u1-* LinkedList1 MetDB Laborator laboratore ;
+u1-* Aggregate2 Laborator Operator operatori;
+u1-* Aggregate2 Operator Experiment vysledky ;
+u1-* LinkedList1 Experiment Mereni posloupnost ;
+u1-1 SingleLink Mereni StavBreberky stav ;
+u1-* LinkedList1 Mereni Parameter parametery ;
+u1-1 SingleLink Parameter Latka merenjaLatka ;
+Name Latka latkaName ;
+Name Latka chemickyVzorec ;
+Name StavBreberky popisStavu ;
+Name BioAktivita popisAktivity ;
+Name Operator opName ;
+Name Laborator LabName ;
