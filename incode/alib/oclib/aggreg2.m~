@@ -1,0 +1,85 @@
+@class $1;
+@class $2;
+                          
+@implementation $$_Aggregate2
+// ------------------------------------------------------------------------
++ (void) addHead: ($1*) p add: ($2*) c
+{
+    if(c->$0.parent){
+        printf("$$.addHead() error: Child=%d already in $$_Aggregate2\n",c);
+        return;
+    }
+    c->$0.parent=p;
+    [super addHead: p add: c];
+}
+                          
++ (void) addTail: ($1*) p add: ($2*) c
+{
+    if(c->$0.parent){
+        printf("$$.addTail() error: Child=%d already in $$_Aggregate2\n",c);
+        return;
+    }
+    c->$0.parent=p;
+    [super addTail: p add: c];
+}
+                          
+// append Child c2 after Child c1
++ (void) append: ($2*) c1 elem: ($2*) c2
+{
+    $1* p=c1->$0.parent;
+    if(!p){
+        printf("$$.append() error: c1=%d not in $$_Aggregate2\n",c1);
+        return;
+    }
+    if(c2->$0.parent){
+        printf("$$.addTail() error: c2=%d already in $$_Aggregate2\n",c2);
+        return;
+    }
+    c2->$0.parent=p;
+    [super append: p after: c1 add: c2];
+}
+                          
+// insert Child c1 before Child c1
++ (void) insert: ($2*) c1 before: ($2*) c2
+{
+    $1* p=c2->$0.parent;
+    if(!p){
+        printf("$$.append() error: c2=%d not in $$_Aggregate2\n",c2);
+        return;
+    }
+    if(c1->$0.parent){
+        printf("$$.addTail() error: c1=%d already in $$_Aggregate2\n",c1);
+        return;
+    }
+    c1->$0.parent=p;
+    [super insert: c1 before: c2];
+}
+                          
++ (void) remove: ($2*) c{
+    $1* p=c->$0.parent;
+    if(p){
+	[super remove: p elem: c]; 
+	c->$0.parent=NULL;
+    }
+    else printf("WARNING: $$.remove() with c=%d already disconnected\n",c);
+}
+
++ ($1*) parent: ($2*) c
+{
+    return c->$0.parent;
+}
+
++ ($2*) next: ($2*) c // returns NULL when s is the tail
+{
+    return c->$0.next;
+}
+
++ ($2*) prev: ($2*) c // returns NULL when s is the head
+{
+    return c->$0.prev;
+}
+@end
+
+@implementation $$_Aggregate2Iterator
+- (id) init{ [super init]; return self;}
+@end

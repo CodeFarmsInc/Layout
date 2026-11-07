@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML'
+         timestamp = '1515125081'
+  <XMI.header>
+    <XMI.documentation>
+      <XMI.exporter>CentralControl</XMI.exporter>
+      <XMI.exporterVersion>1.0</XMI.exporterVersion>
+    </XMI.documentation>
+  </XMI.header>
+  <XMI.content>
+    <UML:Model xmi.id = 'layout:1000'
+      name = 'layout' isSpecification = 'false'
+      isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+      <UML:Namespace.jLib_UML>
+        <UML:Class xmi.id = 'layout:1001' name = 'Pair'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'layout:1052' name = 'Net'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'layout:1003' name = 'Node'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'layout:1007' name = 'Layout'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'layout:1016' name = 'Edge'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'layout:1011' name = 'Group'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'layout:1042' name = 'Track'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+        <UML:Class xmi.id = 'layout:1021' name = 'Member'
+              visibility = 'public' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'
+              isActive = 'false'/>
+      </UML:Namespace.jLib_UML>
+    </UML:Model>
+  </XMI.content>
+</XMI>

@@ -1,0 +1,15 @@
+u1-* Pointer Student Teacher myTeacher ;
+u1-* Pointer Record Student myStudent ;
+u1-* Pointer Record Course myCourse ;
+u1-* Pointer Course Teacher myTeacher ;
+u1-* list Faculty Student students ;
+u1-* list Faculty Department departments ;
+u1-* list Department Teacher teachers ;
+u1-* list Teacher Student mentoring ;
+u1-* list Student Record myRecords ;
+u1-* list Course Record records ;
+u1-* list Teacher Course teaches ;
+u1-* Pointer Student Teacher myTeacher ;
+u1-* Pointer Record Student myStudent ;
+u1-* Pointer Record Course myCourse ;
+u1-* Pointer Course Teacher myTeacher ;

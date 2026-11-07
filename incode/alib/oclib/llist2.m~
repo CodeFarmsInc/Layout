@@ -1,0 +1,152 @@
+@class $1;
+@class $2;
+
+@implementation $$_LinkedList2
+// --------------------------------------------------------
+
++ ($2*) tail: ($1*) p
+{
+    return p->$0.tail;
+}
+
++ ($2*) head: ($1*) p
+{
+    if(!(p->$0.tail) || !(p->$0.tail->$0.next))return NULL;
+    else return p->$0.tail->$0.next;
+}
+
++ (void) addHead: ($1*) p add: ($2*) c
+{
+    p->$0.tail=[super addHead: p->$0.tail add: c];
+}
+
++ (void) addTail: ($1*) p add: ($2*) c
+{
+	p->$0.tail=[super addTail: p->$0.tail add: c];
+}
+
++ (void) append: ($1*) p after: ($2*) c1 add: ($2*) c2
+{
+	p->$0.tail=[super append: p->$0.tail after: c1 add: c2];
+}
+
++ (void) insert: ($2*) c1 before: ($2*) c2
+{
+	[super insert: c1 before: c2];
+}
+
++ (void) sort: (ZZsortFun) cmpFun parent: ($1*) p
+{
+	p->$0.tail=[super sort: cmpFun tail: p->$0.tail];
+}
+
++ (void) remove: ($1*) p elem: ($2*) c
+{
+	p->$0.tail=[super remove: p->$0.tail elem: c];
+}
+
++ ($2*) next: ($1*) p elem: ($2*) c
+{ 
+	return [super next: p->$0.tail elem: c];
+}
++ ($2*) prev: ($1*) p elem: ($2*) c
+{ 
+	return [super prev: p->$0.tail elem: c];
+}
++ ($2*) nextRing: ($2*) c
+{ return [super nextRing: c];
+}
+
++ ($2*) prevRing: ($2*) c
+{
+	return [super prevRing: c];
+}
+
+// ---------------------------------------------------------------
+// This function either merges two lists (if s and t are on different lists)
+// or splits a list (if s and t are on the same list).
+//
+// When merging lists, p must be a parent of t, and will be set p->tail=NULL.
+// When splitting a list, p must be an empty list holder (p->tail==NULL)
+// and will be set p->tail=t.
+// ---------------------------------------------------------------
++ (void) merge: ($2*) s second: ($2*) t newParent: ($1*) p
+{
+    $2 *pp,*tail; int merge;
+ 
+    tail=p->$0.tail;
+    if(tail==NULL)merge=0; else merge=1; // 0=splitting
+    if(merge){
+        // check that t is child of p
+        for(pp=t->$0.next; pp; pp=pp->$0.next){
+            if(pp==tail)break;
+            if(pp==t)pp=NULL;
+        }
+        if(!pp){
+            printf("$$ error in merge(): merging, inconsistent input\n    ");
+            printf("p is not the parent of t\n");
+        }
+    }
+    else {
+        // check that s and t are on the same list
+        for(pp=s->$0.next; pp; pp=pp->$0.next){
+            if(pp==t)break;
+            if(pp==s)pp=NULL;
+        }
+        if(!pp){
+            printf("$$ error in merge(): splitting, inconsistent input\n    ");
+            printf("p has not children but s and t are not in the same list\n");
+        }
+    }
+    
+    [super merge: s second: t]; 
+    if(merge)p->$0.tail=NULL; else p->$0.tail=t;
+}
+
+- ($2*) child: ($1*) p 
+{
+    $2* t;
+    t=p->$0.tail; if(t)return t->$0.next; return NULL;
+}
+
+// ------------------------------------------------------------------
+// check=1 checks for consistency,
+// check=0 is fast but a mistake can cause a hard-to-find error
+// ------------------------------------------------------------------
++ (void) setTail: ($1*) p second: ($2*) c checkRequest: (int) check
+{
+    $2 *pp,*tail;
+
+    tail=p->$0.tail; 
+    if(check && tail){
+        for(pp=tail->$0.next; pp; pp=pp->$0.next){
+            if(pp==c || pp==tail)break;
+        }
+        if(pp!=c){
+            printf("$$ warning: setTail() for a wrong set of children,");
+            printf(" nothing done\n");
+            return;
+        }
+    }
+    p->$0.tail=c;
+}
+@end
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+@implementation $$_LinkedList2Iterator
+
+- (id) init{ [super init]; return self;}
+
+- ($2*) fromHead: ($1*) p {
+    return [super fromHead: p->$0.tail]; 
+}
+
+- ($2*) fromTail: ($1*) p {
+    return [super fromTail: p->$0.tail]; 
+}
+
+- ($2*) next {
+  [super next];
+}
+@end

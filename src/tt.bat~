@@ -1,0 +1,5 @@
+del gen.*
+c:\dropbox\incode\alib\codegen ds.def c:\dropbox\incode\alib\lib gen
+cl layout.cpp  display.cpp
+copy layout.exe ..\bin
+del layout.exe

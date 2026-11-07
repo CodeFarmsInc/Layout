@@ -1,0 +1,7 @@
+b1-* Aggregate Faculty Student students ;
+b1-* Aggregate Faculty Department departments ;
+b1-* Aggregate Department Teacher teachers ;
+b1-* Aggregate Teacher Student mentoring ;
+u1-* Collection Student Record myRecords ;
+u1-* Collection Course Record records ;
+

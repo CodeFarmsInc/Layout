@@ -1,0 +1,6 @@
+u1-* LinkedList2 Library CD cds ;
+u1-* LinkedList2 Library Performer performers ;
+u1-* LinkedList2 Library Composer composers ;
+u1-1 SingleLink Track Performer performer ;
+u1-1 SingleLink Track Composer composer ;  
+b1-* Aggregate2 CD Track tracks ;

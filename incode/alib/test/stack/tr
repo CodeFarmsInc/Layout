@@ -1,0 +1,6 @@
+#!/bin/sh
+./clean
+../../codegen ds.def ../../lib gen
+g++ stack.cpp
+./a.out stack.inp stack.res
+../diff stack.res stack.out

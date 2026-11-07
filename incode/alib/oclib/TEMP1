@@ -1,0 +1,11 @@
+// ---------------------------------------------------------
+void $$_LinkArray::init($1 *hp){
+    int i,cap,incr; $2 **arr;
+
+    cap=capacity(hp);
+    incr=increment(hp);
+    arr=head(hp);
+    for(i=0; i<cap; i++) arr[i]=NULL;
+    $$_Array::reset(hp,0,incr);
+}
+// ---------------------------------------------------------

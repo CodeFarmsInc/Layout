@@ -1,0 +1,43 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd"
+><svg xmlns="http://www.w3.org/2000/svg">
+  <title>(null)</title>
+  <desc>Automatically generated UML diagram</desc>
+  <rect x="300" y="45" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="307" y="62" style="fill:black; stroke:none; font-size:12;">
+    Graphics
+  </text>
+  <line x1="312" y1="116" x2="79" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="348" y1="116" x2="425" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="327" y1="146" x2="255" y2="146" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="363" y1="146" x2="601" y2="146" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="312" y1="116" x2="312" y2="84"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 312,71 L 320,84 L 304,84 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="327" y1="146" x2="327" y2="84"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 327,71 L 335,84 L 319,84 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="348" y1="116" x2="348" y2="84"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 348,71 L 356,84 L 340,84 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="363" y1="146" x2="363" y2="84"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 363,71 L 371,84 L 355,84 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="79" y1="116" x2="79" y2="191" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="255" y1="146" x2="255" y2="191" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="425" y1="116" x2="425" y2="191" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="601" y1="146" x2="601" y2="191" style="stroke:rgb(99,99,99);stroke-width:2" />  <rect x="37" y="191" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="208" style="fill:black; stroke:none; font-size:12;">
+    Rectangle
+  </text>
+  <rect x="213" y="191" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="220" y="208" style="fill:black; stroke:none; font-size:12;">
+    Line
+  </text>
+  <rect x="389" y="191" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="396" y="208" style="fill:black; stroke:none; font-size:12;">
+    Picture
+  </text>
+  <rect x="565" y="191" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="572" y="208" style="fill:black; stroke:none; font-size:12;">
+    Text
+  </text>
+  <line x1="386" y1="204" x2="307" y2="204"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 294,204 L 307,196 L 307,212 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="499" y1="262" x2="431" y2="262" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="531" y1="262" x2="601" y2="262" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="431" y1="262" x2="431" y2="217" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="601" y1="262" x2="601" y2="217" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="499" y1="262" x2="499" y2="293"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 499,307 L 491,293 L 507,293 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="531" y1="262" x2="531" y2="293"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 531,307 L 523,293 L 539,293 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <rect x="476" y="307" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="483" y="324" style="fill:black; stroke:none; font-size:12;">
+    Editable
+  </text>
+</svg>

@@ -1,0 +1,7 @@
+// ----------------------------------------------
+// definition of the data structures
+// one-to-one correspondence with the UML diagram
+// ----------------------------------------------
+DataStructure Aggregate2<A,B>  AtoB;
+DataStructure LinkedList1<B,C> BtoC;
+// ----------------------------------------------

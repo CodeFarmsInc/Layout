@@ -1,0 +1,33 @@
+cd testABC
+./clean
+cd ..\ring1
+./clean
+cd ..\ring2
+./clean
+cd ..\stack
+./clean
+cd ..\binheap
+./clean
+cd ..\hash
+./clean
+cd ..\vector
+./clean
+cd ..\testComp
+./clean
+cd ..\testMany
+./clean
+cd ..\Array_1
+./clean
+cd ..\Array_2
+./clean
+cd ..\Array_3
+./clean
+cd ..\Array_4
+./clean
+cd ..\Array_5
+./clean
+cd ..\Array_6
+./clean
+cd ..\Array_7
+./clean
+cd ..

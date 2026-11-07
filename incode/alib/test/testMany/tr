@@ -1,0 +1,7 @@
+#!/bin/sh
+./clean
+ls testmany.cpp > srcList
+../../codegen -uml ds.def ../../lib gen srcList umlFile
+g++ testmany.cpp
+./a.out > testmany.res
+../diff testmany.res testmany.out

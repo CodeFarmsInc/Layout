@@ -1,0 +1,133 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd"
+><svg xmlns="http://www.w3.org/2000/svg">
+  <title>(null)</title>
+  <desc>Automatically generated UML diagram</desc>
+  <rect x="431" y="45" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="438" y="62" style="fill:black; stroke:none; font-size:12;">
+    Library
+  </text>
+  <line x1="447" y1="116" x2="79" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="232" y="112" style="fill:black; stroke:none; font-size:10;">
+    composers
+  </text>
+  <text x="225" y="127" style="fill:black; stroke:none; font-size:10;">
+    LinkedList2
+  </text>
+  <line x1="491" y1="116" x2="861" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="641" y="112" style="fill:black; stroke:none; font-size:10;">
+    performers
+  </text>
+  <text x="638" y="127" style="fill:black; stroke:none; font-size:10;">
+    LinkedList2
+  </text>
+  <line x1="466" y1="146" x2="430" y2="146" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="438" y="142" style="fill:black; stroke:none; font-size:10;">
+    cds
+  </text>
+  <text x="410" y="157" style="fill:black; stroke:none; font-size:10;">
+    LinkedList2
+  </text>
+  <line x1="447" y1="116" x2="447" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="451" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="466" y1="146" x2="466" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="470" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="491" y1="116" x2="491" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="495" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="79" y1="116" x2="79" y2="191" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="79" y1="191" x2="75" y2="184" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="79" y1="191" x2="83" y2="184" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="83" y="187" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="430" y1="146" x2="430" y2="191" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="430" y1="191" x2="426" y2="184" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="430" y1="191" x2="434" y2="184" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="434" y="187" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="861" y1="116" x2="861" y2="191" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="861" y1="191" x2="857" y2="184" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="861" y1="191" x2="865" y2="184" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="865" y="187" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="37" y="191" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="208" style="fill:black; stroke:none; font-size:12;">
+    Composer
+  </text>
+  <rect x="473" y="191" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="480" y="208" style="fill:black; stroke:none; font-size:12;">
+    Link
+  </text>
+  <rect x="388" y="191" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="395" y="208" style="fill:black; stroke:none; font-size:12;">
+    CD
+  </text>
+  <rect x="825" y="191" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="832" y="208" style="fill:black; stroke:none; font-size:12;">
+    Performer
+  </text>
+  <text x="59" y="258" style="fill:black; stroke:none; font-size:10;">
+    works
+  </text>
+  <text x="73" y="273" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="430" y1="262" x2="454" y2="262" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="421" y="258" style="fill:black; stroke:none; font-size:10;">
+    tracks
+  </text>
+  <text x="439" y="273" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="486" y1="262" x2="861" y2="262" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="666" y="258" style="fill:black; stroke:none; font-size:10;">
+    playedBy
+  </text>
+  <text x="673" y="273" style="fill:black; stroke:none; font-size:10;">
+    M_TO_N
+  </text>
+  <line x1="486" y1="262" x2="861" y2="262" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="76" y1="262" x2="76" y2="217" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="80" y="228" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="496" y1="262" x2="496" y2="217" style="stroke:rgb(99,99,99);stroke-width:2" stroke-dasharray="6 3" />  <text x="500" y="228" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="430" y1="262" x2="430" y2="217" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="434" y="228" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="861" y1="262" x2="861" y2="217" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="865" y="228" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="76" y1="262" x2="76" y2="307" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="80" y="303" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="486" y1="262" x2="486" y2="307" style="stroke:rgb(99,99,99);stroke-width:2" stroke-dasharray="6 3" />  <line x1="454" y1="262" x2="454" y2="307" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="458" y="303" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="37" y="307" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="324" style="fill:black; stroke:none; font-size:12;">
+    Work
+  </text>
+  <rect x="431" y="307" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="438" y="324" style="fill:black; stroke:none; font-size:12;">
+    Track
+  </text>
+  <line x1="79" y1="378" x2="257" y2="378" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="151" y="374" style="fill:black; stroke:none; font-size:10;">
+    parts
+  </text>
+  <text x="165" y="389" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="289" y1="378" x2="467" y2="378" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="354" y="374" style="fill:black; stroke:none; font-size:10;">
+    onTrack
+  </text>
+  <text x="375" y="389" style="fill:black; stroke:none; font-size:10;">
+     
+  </text>
+  <line x1="79" y1="378" x2="79" y2="333" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="83" y="344" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="467" y1="378" x2="467" y2="333" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="471" y="344" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="257" y1="378" x2="257" y2="423" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="261" y="419" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="289" y1="378" x2="289" y2="423" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="293" y="419" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <rect x="234" y="423" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="241" y="440" style="fill:black; stroke:none; font-size:12;">
+    Part
+  </text>
+</svg>

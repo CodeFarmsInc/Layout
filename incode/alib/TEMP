@@ -1,0 +1,1 @@
+char Generator::i2s(int i,char *s,int sz){

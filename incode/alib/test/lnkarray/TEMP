@@ -1,0 +1,1 @@
+    static int cmp(const void *v1,const void *v2);

@@ -1,0 +1,4 @@
+u1-* Collection2 World Town towns ;
+u1-* Collection2 World Airline airlines ;
+b1-* Aggregate2 Airline Flight flights ;
+b2-* DirectedGraph2 Town Flight connections ;

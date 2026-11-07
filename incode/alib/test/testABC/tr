@@ -1,0 +1,6 @@
+#!/bin/sh
+./clean
+../../codegen ds.def ../../lib gen
+g++ testABC.cpp testB.cpp
+./a.out > abc.res
+../diff abc.res abc.out

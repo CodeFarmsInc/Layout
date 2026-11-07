@@ -1,0 +1,8 @@
+#!/bin/sh
+rm *.res
+rm gen.*
+rm tmp/*.cpp
+rm tmp/*.h
+rm *.o
+rm a.out
+rm srcList

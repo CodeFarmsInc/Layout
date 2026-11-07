@@ -1,0 +1,1 @@
+javac -deprecation JavaDisplay.java

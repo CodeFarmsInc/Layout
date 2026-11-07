@@ -1,0 +1,6 @@
+#!/bin/sh
+./clean
+../../codegen ds.def ../../lib gen
+g++ hash.cpp
+./a.out > hash.res
+../diff hash.res hash.out

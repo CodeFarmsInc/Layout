@@ -1,0 +1,8 @@
+u1-* Hash Library Book books ;
+u1-* Hash Library Author authors ;
+u1-* Hash Library Reader readers ;
+b*-* ManyToManyX Book Author bksOfAuth ;
+b1-* Aggreg2 Holder Copy holds ;
+b1-* Aggreg2 Book Copy copies ;
+Inherits Library Holder ;
+Inherits Reader Holder ;

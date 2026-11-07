@@ -1,0 +1,47 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd"
+><svg xmlns="http://www.w3.org/2000/svg">
+  <title>(null)</title>
+  <desc>Automatically generated UML diagram</desc>
+  <rect x="37" y="45" width="146" height="52" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="62" style="fill:black; stroke:none; font-size:12;">
+    Root
+  </text>
+  <text x="89" y="138" style="fill:black; stroke:none; font-size:10;">
+    colObj
+  </text>
+  <text x="61" y="153" style="fill:black; stroke:none; font-size:10;">
+    SINGLE_COLLECT
+  </text>
+  <line x1="110" y1="142" x2="110" y2="97" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="114" y="108" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="110" y1="142" x2="110" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="110" y1="187" x2="106" y2="180" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="110" y1="187" x2="114" y2="180" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="114" y="183" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="37" y="187" width="146" height="52" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="204" style="fill:black; stroke:none; font-size:12;">
+    Obj
+  </text>
+  <text x="44" y="219" style="fill:black; stroke:none; font-size:10;">
+     PROPERTY:
+  </text>
+  <text x="44" y="234" style="fill:black; stroke:none; font-size:10;">
+     Name:objType
+  </text>
+  <text x="89" y="280" style="fill:black; stroke:none; font-size:10;">
+    colXXX
+  </text>
+  <text x="61" y="295" style="fill:black; stroke:none; font-size:10;">
+    SINGLE_COLLECT
+  </text>
+  <line x1="110" y1="284" x2="110" y2="239" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="114" y="250" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="110" y1="284" x2="110" y2="329" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="110" y1="329" x2="106" y2="322" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="110" y1="329" x2="114" y2="322" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="114" y="325" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="37" y="329" width="146" height="52" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="346" style="fill:black; stroke:none; font-size:12;">
+    XXX
+  </text>
+</svg>

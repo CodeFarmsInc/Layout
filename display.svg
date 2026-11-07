@@ -1,0 +1,209 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd"
+><svg xmlns="http://www.w3.org/2000/svg">
+  <title>(null)</title>
+  <desc>Automatically generated UML diagram</desc>
+  <rect x="240" y="45" width="84" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="247" y="62" style="fill:black; stroke:none; font-size:12;">
+    Faculty
+  </text>
+  <line x1="265" y1="116" x2="82" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="145" y="112" style="fill:black; stroke:none; font-size:10;">
+    students
+  </text>
+  <text x="159" y="127" style="fill:black; stroke:none; font-size:10;">
+    list
+  </text>
+  <line x1="299" y1="116" x2="482" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="352" y="112" style="fill:black; stroke:none; font-size:10;">
+    departments
+  </text>
+  <text x="376" y="127" style="fill:black; stroke:none; font-size:10;">
+    list
+  </text>
+  <line x1="265" y1="116" x2="265" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="269" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="299" y1="116" x2="299" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="303" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="82" y1="116" x2="82" y2="161" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="82" y1="161" x2="78" y2="154" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="82" y1="161" x2="86" y2="154" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="86" y="157" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="482" y1="116" x2="482" y2="161" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="482" y1="161" x2="478" y2="154" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="482" y1="161" x2="486" y2="154" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="486" y="157" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="37" y="161" width="84" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="178" style="fill:black; stroke:none; font-size:12;">
+    Student
+  </text>
+  <rect x="443" y="161" width="84" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="450" y="178" style="fill:black; stroke:none; font-size:12;">
+    Department
+  </text>
+  <line x1="52" y1="232" x2="97" y2="232" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="43" y="228" style="fill:black; stroke:none; font-size:10;">
+    myRecords
+  </text>
+  <text x="60" y="243" style="fill:black; stroke:none; font-size:10;">
+    list
+  </text>
+  <line x1="112" y1="232" x2="307" y2="232" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="178" y="228" style="fill:black; stroke:none; font-size:10;">
+    myTeacher
+  </text>
+  <text x="185" y="243" style="fill:black; stroke:none; font-size:10;">
+    Pointer
+  </text>
+  <line x1="482" y1="232" x2="345" y2="232" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="385" y="228" style="fill:black; stroke:none; font-size:10;">
+    teachers
+  </text>
+  <text x="399" y="243" style="fill:black; stroke:none; font-size:10;">
+    list
+  </text>
+  <text x="45" y="258" style="fill:black; stroke:none; font-size:10;">
+    myStudent
+  </text>
+  <text x="52" y="273" style="fill:black; stroke:none; font-size:10;">
+    Pointer
+  </text>
+  <line x1="61" y1="262" x2="58" y2="262" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="28" y="258" style="fill:black; stroke:none; font-size:10;">
+    myStudent
+  </text>
+  <text x="35" y="273" style="fill:black; stroke:none; font-size:10;">
+    Pointer
+  </text>
+  <line x1="291" y1="262" x2="88" y2="262" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="158" y="258" style="fill:black; stroke:none; font-size:10;">
+    mentoring
+  </text>
+  <text x="175" y="273" style="fill:black; stroke:none; font-size:10;">
+    list
+  </text>
+  <line x1="100" y1="292" x2="323" y2="292" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="180" y="288" style="fill:black; stroke:none; font-size:10;">
+    myTeacher
+  </text>
+  <text x="187" y="303" style="fill:black; stroke:none; font-size:10;">
+    Pointer
+  </text>
+  <line x1="58" y1="262" x2="58" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="58" y1="187" x2="62" y2="193" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="58" y1="187" x2="54" y2="193" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="62" y="198" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="52" y1="232" x2="52" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="56" y="198" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="76" y1="262" x2="76" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="76" y1="187" x2="80" y2="193" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="76" y1="187" x2="72" y2="193" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="80" y="198" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="112" y1="232" x2="112" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="116" y="198" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="88" y1="262" x2="88" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="88" y1="187" x2="92" y2="193" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="88" y1="187" x2="84" y2="193" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="92" y="198" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="100" y1="292" x2="100" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="104" y="198" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="482" y1="232" x2="482" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="486" y="198" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="61" y1="262" x2="61" y2="337" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="65" y="333" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="97" y1="232" x2="97" y2="337" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="97" y1="337" x2="93" y2="330" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="97" y1="337" x2="101" y2="330" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="101" y="333" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="76" y1="262" x2="76" y2="337" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="80" y="333" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="307" y1="232" x2="307" y2="337" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="307" y1="337" x2="303" y2="330" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="307" y1="337" x2="311" y2="330" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="311" y="333" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="291" y1="262" x2="291" y2="337" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="295" y="333" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="323" y1="292" x2="323" y2="337" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="323" y1="337" x2="319" y2="330" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="323" y1="337" x2="327" y2="330" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="327" y="333" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="345" y1="232" x2="345" y2="337" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="345" y1="337" x2="341" y2="330" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="345" y1="337" x2="349" y2="330" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="349" y="333" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="37" y="337" width="84" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="354" style="fill:black; stroke:none; font-size:12;">
+    Record
+  </text>
+  <rect x="278" y="337" width="84" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="285" y="354" style="fill:black; stroke:none; font-size:12;">
+    Teacher
+  </text>
+  <line x1="166" y1="408" x2="61" y2="408" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="89" y="404" style="fill:black; stroke:none; font-size:10;">
+    records
+  </text>
+  <text x="99" y="419" style="fill:black; stroke:none; font-size:10;">
+    list
+  </text>
+  <line x1="338" y1="408" x2="208" y2="408" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="249" y="404" style="fill:black; stroke:none; font-size:10;">
+    teaches
+  </text>
+  <text x="259" y="419" style="fill:black; stroke:none; font-size:10;">
+    list
+  </text>
+  <line x1="82" y1="438" x2="190" y2="438" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="108" y="434" style="fill:black; stroke:none; font-size:10;">
+    myCourse
+  </text>
+  <text x="112" y="449" style="fill:black; stroke:none; font-size:10;">
+    Pointer
+  </text>
+  <line x1="220" y1="438" x2="317" y2="438" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="237" y="434" style="fill:black; stroke:none; font-size:10;">
+    myTeacher
+  </text>
+  <text x="244" y="449" style="fill:black; stroke:none; font-size:10;">
+    Pointer
+  </text>
+  <line x1="103" y1="468" x2="178" y2="468" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="112" y="464" style="fill:black; stroke:none; font-size:10;">
+    myCourse
+  </text>
+  <text x="116" y="479" style="fill:black; stroke:none; font-size:10;">
+    Pointer
+  </text>
+  <line x1="232" y1="468" x2="296" y2="468" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="233" y="464" style="fill:black; stroke:none; font-size:10;">
+    myTeacher
+  </text>
+  <text x="240" y="479" style="fill:black; stroke:none; font-size:10;">
+    Pointer
+  </text>
+  <line x1="103" y1="468" x2="103" y2="363" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="107" y="374" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="61" y1="408" x2="61" y2="363" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="61" y1="363" x2="65" y2="369" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="61" y1="363" x2="57" y2="369" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="65" y="374" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="82" y1="438" x2="82" y2="363" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="86" y="374" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="296" y1="468" x2="296" y2="363" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="296" y1="363" x2="300" y2="369" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="296" y1="363" x2="292" y2="369" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="300" y="374" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="338" y1="408" x2="338" y2="363" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="342" y="374" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="317" y1="438" x2="317" y2="363" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="317" y1="363" x2="321" y2="369" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="317" y1="363" x2="313" y2="369" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="321" y="374" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="178" y1="468" x2="178" y2="513" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="178" y1="513" x2="174" y2="506" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="178" y1="513" x2="182" y2="506" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="182" y="509" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="166" y1="408" x2="166" y2="513" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="170" y="509" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="190" y1="438" x2="190" y2="513" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="190" y1="513" x2="186" y2="506" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="190" y1="513" x2="194" y2="506" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="194" y="509" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="232" y1="468" x2="232" y2="513" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="236" y="509" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="208" y1="408" x2="208" y2="513" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="208" y1="513" x2="204" y2="506" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="208" y1="513" x2="212" y2="506" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="212" y="509" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="220" y1="438" x2="220" y2="513" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="224" y="509" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <rect x="157" y="513" width="84" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="164" y="530" style="fill:black; stroke:none; font-size:12;">
+    Course
+  </text>
+</svg>

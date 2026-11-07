@@ -1,0 +1,7 @@
+U1-* Uni1toX Company Warehouse warehouses ;
+U1-* Uni1toX Company Product products ;
+U1-* Uni1toX Warehouse PartType stored ;
+U1-* Uni1toX Product PartType needed ;
+U1-* Uni1toX Assembly PartType assemble ;
+Name Product prodName ;
+Inherits Assembly PartType ;

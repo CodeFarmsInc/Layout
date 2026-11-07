@@ -1,0 +1,5 @@
+
+    static $2* const entity1($1 *r){return $$_1XtoX::entity1(r);}
+    static $1* const next1($1 *r)  {return $$_1XtoX::next1(r);}
+    static $1* const prev1($1 *r)  {return $$_1XtoX::prev1(r);}
+

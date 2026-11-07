@@ -1,0 +1,138 @@
+// -------------------------------------------------------------------------
+// This is a test of of working with an array of pointers - just a bunch
+// of Parts and iterating through them using their integer index.
+// This style of using the Array is the basis for the default class Uni1toX.
+// --------------------------------------------------------------------------
+
+#include <stdio.h>
+#include "gen.h"
+
+class Part {     // class under which to store the array
+    int id;
+public:
+    ZZ_Part ZZds;
+    Part(){id=0;}
+    Part(int i){id=i;}
+    void prt(){printf("part=%d\n",id);}
+    int getID(){return id;}
+};
+
+class PartPtr {
+public:
+    ZZ_PartPtr ZZds;
+};
+
+class Root {     // class under which to store the array
+public:
+    ZZ_Root ZZds;
+    Root();
+    ~Root();
+    void prt(); // print all Parts
+    void eliminate(int partID);
+    Part* getPart(int i);
+    void setPart(Part *p,int i);
+};
+
+
+// ----------------------------------------------------
+// Start with a small initial array for every Root
+// ----------------------------------------------------
+Root::Root(){
+    myBag::form(this,3,-2); // initial size=3, increase 2x when needed
+}
+
+// ----------------------------------------------------
+// First destroy all the Parts, then free the array
+// ----------------------------------------------------
+Root::~Root(){
+    int i,sz;  Part *p; PartPtr *pp;
+
+    sz=myBag::size(this);
+    for(i=0; i<sz; i++){
+        p=getPart(i);
+        if(p){delete p;}
+    }
+    myBag::free(this);
+}
+
+// ----------------------------------------------------
+// ----------------------------------------------------
+Part* Root::getPart(int i){
+    PartPtr pp;
+    pp=myBag::get(this,i);
+    return ptr::target(&pp);
+}
+
+// ----------------------------------------------------
+// ----------------------------------------------------
+void Root::setPart(Part *p,int i){
+    PartPtr pp;
+    ptr::add(&pp,p);
+    myBag::set(this,i,pp);
+}
+
+// ----------------------------------------------------
+// Print the current array
+// ----------------------------------------------------
+void Root::prt(){
+    int i,sz; Part *p;
+
+    sz=myBag::size(this);
+    for(i=0; i<sz; i++){
+        p=getPart(i);
+        p->prt();
+    }
+}
+
+
+// ----------------------------------------------------
+// Remove and destroy the given part. Since our data 
+// organization is a bag, we have to search for the part
+// before removing it from the array and then destroying it.
+// ----------------------------------------------------
+void Root::eliminate(int partID){
+    int i,sz; Part *p;
+
+    sz=myBag::size(this);
+    for(i=0; i<sz; i++){
+        p=getPart(i);
+        if(p->getID()==partID)break;
+    }
+    if(i>=sz){
+        printf("not in myBag: partID=%d\n",partID);
+    }
+    else {
+        myBag::remove(this,i);
+        delete p;
+    }    
+}
+// ----------------------------------------------------
+int main(){
+    Root *r; Part *p; int i;
+
+    r=new Root;
+
+    // generate parts with id=100,...,110
+    for(i=0; i<=10; i++){
+        p=new Part(100+i);
+        r->setPart(p,i);
+    }
+
+    // create one additional part without adding it to the array
+    p=new Part(99);
+
+    // attempt to remove parts 99, 108 and 100
+    r->eliminate(99);
+    r->eliminate(108);
+    r->eliminate(100);
+
+    // print all the remaining parts
+    r->prt();
+
+    // destroy all the data
+    delete r;
+    return 0;
+}
+
+#include "gen.cpp"
+

@@ -1,0 +1,78 @@
+// ----------------------------------------------------------
+//                    2XtoX<Relation,Entity1,Entity2>
+//
+// This is the most frequently used Many-To-Many relation between
+// two entity types. For each recorded relation there is an Relation object.
+// ----------------------------------------------------------
+// By repeating this code with minor modifications, it is easy
+// to derive higher order many-to-many relations:
+//    from 2XtoX to derive 2XtoX (this code)
+//    from 2XtoX to derive 3XtoX
+//    from 3XtoX to derive 4XtoX
+//    ... and so on ...
+//                                    Jiri Soukup, July 14, 2005
+// ----------------------------------------------------------
+
+// ----------------------------------------------------------
+#ifndef ZZ_$$_2XTOX_INCLUDED
+#define ZZ_$$_2XTOX_INCLUDED
+
+@class $1;
+@class $2;
+@class $3;
+
+// description of the cooperating classes
+#define $$_2XtoXRelation \
+    $$_1XtoXRelation; \
+    $1* $$_next2;\
+    $1* $$_prev2;\
+    $3* $$_parent2
+
+#define $$_2XtoXEntity1  \
+    $$_1XtoXEntity1 
+
+#define $$_2XtoXEntity2 \
+    $1* $$_tail2
+// ..........................................
+#define $$_2XtoXRelation_ptrList \
+    $$_1XtoXRelation_ptrList; \
+    $$_next2=ONE;\
+    $$_prev2=ONE;\
+    $$_parent2=ONE
+
+#define $$_2XtoXEntity1_ptrList  \
+    $$_1XtoXEntity1_ptrList 
+
+#define $$_2XtoXEntity2_ptrList \
+    $$_tail2=ONE
+
+// ----------------------------------------------------------
+
+@interface $$_2XtoX : $$_1XtoX 
+	+ (void) add: ($1*) r ent1: ($2*) e1 ent2: ($3*) e2; // equivalent of addTail()
++ (void) remove: ($1*) r;
++ ($2*) entity1: ($1*) r;
++ ($1*) next1: ($1*) r;
++ ($1*) prev1: ($1*) r;
+
++ ($3*) entity2: ($1*) r;
++ ($1*) next2: ($1*) r;   // returns NULL when s is the tail
++ ($1*) prev2: ($1*) r;   // returns NULL when s is the head
+@end
+
+@interface $$_2XtoXIterator : $$_1XtoXIterator 
+{
+    // standard interface:          for(r=it.from1(e1); r; r=it.next1()){...}
+    // standard interface:          for(r=it.from2(e2); r; r=it.next2()){...}
+    $1 *tail2;
+    $1 *nxt2;
+}
+- (id) init;
+- ($1*) from1: ($2*) e;
+- ($1*) next1;
+
+- ($1*) from2: ($3*) e;
+- ($1*) next2;
+@end
+
+#endif // ZZ_$$_2XTOX_INCLUDED

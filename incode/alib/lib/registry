@@ -1,0 +1,46 @@
+// The leading group of characters describe theUML interpretation:
+// u = uni-directional, b = bi-directional, capital for the default
+// 1-1 for one-to-one, 1-* for one-to-many, etc.
+//
+// dataStructure<par1,par2> file :baseClass<par1,par2> Iterator
+// One :baseClass and/or several Iterator are optional.
+// Change in the number of parameters is allowed, e.g.
+// e.g.     dataStr<par1,par2> file :baseClass<$2> Iterator
+// implies  dataStr<par1,par2> file :baseClass<par2> Iterator
+// baseClass types may include fix class name,
+// e.g.     dataStr<par1,par2> vile :baseClass<myClass,$2> Iterator
+// Comments (//) can be used as usual in C++ or Java, but must not be 
+// in the middle of a multi-line statement.
+// - sign marks participating classes which hold not any data
+// Records can stretch over several lines, character ';' detemines the end.
+
+
+u1-1 SingleLink<SingleLinkParent,-SingleLinkChild> singlink;
+b1-1 DoubleLink<DoubleLinkParent,DoubleLinkChild> doublink :SingleLink<$1,$2>;
+u1=1 Ring1<Ring1Element> ring1 Iterator;
+u1=2 Ring2<Ring2Element> ring2 Iterator;
+u1-* LinkedList1<LinkedList1Parent,LinkedList1Child> llist1 :Ring1<$2> Iterator;
+u1-* LinkedList2<LinkedList2Parent,LinkedList2Child> llist2 :Ring2<$2> Iterator;
+b1-* Aggregate2<Aggregate2Parent,Aggregate2Child> aggreg2 
+                                             :LinkedList2<$1,$2> Iterator;
+u1-0 Name<NameParent> name;
+u1-* Array<ArrayHolder,-ArrayElement> array;
+u1-* Stack<StackHolder,-StackElement> stack :Array<$1,$2>;
+u1-* BinaryHeap<HeapHolder,-HeapElement> binheap :Array<$1,$2>;
+u1-0 BitArray<BitArrayHolder> bitarray :Array<$1,char>;
+u1-* Hash<HashHolder,HashElement> hash :Array<$1,void*> Iterator;
+u1-* Bag<BagHolder,-BagElement> bag :Array<$1,void*> Iterator;
+u1-* LinkArray<LinkArrayHolder,-LinkArrayElement> lnkarray :Array<$1,void*>;
+b1-* IndexedLinkArray<IndexedLinkArrayHolder,IndexedLinkArrayElement> ilarray :LinkArray<$1,$2>;
+u1-* Vector1<Vector1Parent,Vector1Child> stlVector1;
+u1-* Vector2<Vector2Parent,Vector2Child> stlVector2 :Vector1<$1,$2>;
+
+U1-1 Uni1to1<Uni1to1Parent,Uni1to1Child> uni1to1 :SingleLink<$1,$2>;
+B1-1 Bi1to1<Bi1to1Parent,Bi1to1Child> bi1to1 :DoubleLink<$1,$2>;
+U1-* Uni1toX<Uni1toXParent,-Uni1toXChild> uni1toX :Bag<$1,$2> Iterator;
+B1-* Bi1toX<Bi1toXParent,Bi1toXChild> bi1toX :Aggregate2<$1,$2> Iterator;
+
+R*1* 1XtoX<1XtoXRelation,1XtoXEntity1> 1xtox :Aggregate2<$2,$1> Iterator;
+R*2* 2XtoX<2XtoXRelation,2XtoXEntity1,2XtoXEntity2> 2xtox :1XtoX<$1,$2> Iterator;
+R*3* 3XtoX<3XtoXRelation,3XtoXEntity1,3XtoXEntity2,3XtoXEntity3> 3xtox :2XtoX<$1,$2,$3> Iterator;
+

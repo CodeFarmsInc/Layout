@@ -1,0 +1,5 @@
+del gen.*
+..\alib\codegen -uml ds.def ..\alib\lib gen srcList layout
+cl layout.cpp
+copy layout.exe ..\bin
+del layout.exe

@@ -1,0 +1,84 @@
+<p>
+After you move these two files into alib/lib, all which remains is to register
+the new association in file alib/lib/registry.
+<p>
+WARNING: If you want to experiment with the new LinkedList2, do not move it
+into alib/lib unless you want to replace LinkedList2 which is already there.
+Create a separate directory for your associations, and move your files there.
+You also have add the 'registry' file to that directory. For your first class,
+this file will contain only one line:
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFCCF0" width="80%"> 
+<pre>
+    u1-* LinkedList2&ltLinkedList2Parent,LinkedList2Child&gt llist2 Iterator;
+</pre>
+</td></tr></table>
+
+<p>
+If you are adding the new class to an existing library, just add this line
+to file incode/alib/lib/registry (add it anywhere, the position of the line
+is irrelevant). In this example,
+the meaning of the first 4 characters is:
+<UL>
+<LI>u = uni-directional association,
+<LI>* = the multiplicity of the source end is 'many',
+<LI>- = association of two classes,
+<LI>* = the multiplicity of the target end is 'many'.
+</UL>
+The first character can be 'u' or 'b' (b or bi-directional), or 'U' or 'B'
+if this association is a default for this association type.
+<p>
+If the association connects more then 2 classes, the registry record 
+has two additional characters for each additional target class. For example
+<p>
+
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFCCF0" width="80%"> 
+<pre>
+    u14*u*u1 FSM&ltFSMholder,State,Input,TableElem&gt fsm;
+</pre>
+</td></tr></table>
+
+<p>
+where one FSMholder has access to many States and to many Inputs but only
+to one TableElem, yet neither of these know in which FSM they are used
+(u = uni-directions access for all the targets).
+<p>
+NOTE: In alib Ver.2.0, the FSM class is not included yet. This example
+is based on class FSM from the Pattern Template Library (PTL), the library
+with classes that are generally easy to port to alib.
+<p>
+A special registration code is used for the commonly occuring 
+many-to-many associations.
+The code has always only 4 characters:  <pre>
+    R*n*
+</pre>where 
+<I>n</I> is the number of participating classes excluding(!) the relation
+class which is always listed as first. For example for
+<p>
+<pre>
+    class Student{...};
+    class Course {...};
+    class IsTaking{
+        int lastMark;
+        ...
+    }
+
+    Association 2XtoX(IsTaking,Student,Course) isTaking;
+</pre>
+<p>
+the registration code is
+<p>
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+</tr><td valign="top" bgcolor="#FFCCF0" width="80%"> 
+<pre>
+    R*2* 2XtoX&ltIsTaking,Student,Course&gt istaking;
+</pre>
+</td></tr></table>
+
+<p>
+<p>
+Now when you know all the details of how to set the registration code, 
+you can use your new association as shown in the following little program:

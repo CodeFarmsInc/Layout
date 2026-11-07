@@ -1,0 +1,3 @@
+b1-* SINGLE_AGGREGATE TileType ShapeType mTileShapes ;
+Inherits CircleType ShapeType TileType ;
+Inherits RectangleType ShapeType ;

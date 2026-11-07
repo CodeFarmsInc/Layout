@@ -1,0 +1,6 @@
+u1=1 SINGLE_RING Block bChain ;
+u1=1 SINGLE_RING Net nChain ;
+b1-* SINGLE_TRIANGLE Pin Block byBlock ;
+b1-* SINGLE_TRIANGLE Pin Net byNet ;
+u1-0 Name Block bName ;
+u1-0 Name Net nName ;

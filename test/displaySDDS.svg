@@ -1,0 +1,105 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd"
+><svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340">
+  <title>(null)</title>
+  <desc>Automatically generated UML diagram</desc>
+  <rect x="332" y="45" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="339" y="62" style="fill:black; stroke:none; font-size:12;">
+    Holder
+  </text>
+  <line x1="348" y1="116" x2="79" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="196" y="112" style="fill:black; stroke:none; font-size:10;">
+    holds
+  </text>
+  <text x="189" y="127" style="fill:black; stroke:none; font-size:10;">
+    Aggreg2
+  </text>
+  <line x1="392" y1="116" x2="664" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="373" y1="116" x2="368" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="348" y1="116" x2="348" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="352" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="373" y1="116" x2="373" y2="84"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 373,71 L 381,84 L 365,84 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="392" y1="116" x2="392" y2="84"  style="stroke:rgb(99,99,99);stroke-width:2" />
+  <path d="M 392,71 L 400,84 L 384,84 z" style="stroke:rgb(99,99,99);stroke-width:2" fill="none" />
+  <line x1="79" y1="116" x2="79" y2="161" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="83" y="157" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="368" y1="116" x2="368" y2="161" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="664" y1="116" x2="664" y2="161" style="stroke:rgb(99,99,99);stroke-width:2" />  <rect x="37" y="161" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="178" style="fill:black; stroke:none; font-size:12;">
+    Copy
+  </text>
+  <rect x="332" y="161" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="339" y="178" style="fill:black; stroke:none; font-size:12;">
+    Library
+  </text>
+  <rect x="628" y="161" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="635" y="178" style="fill:black; stroke:none; font-size:12;">
+    Reader
+  </text>
+  <line x1="413" y1="174" x2="625" y2="174" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="625" y1="174" x2="618" y2="178" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="625" y1="174" x2="618" y2="170" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="495" y="170" style="fill:black; stroke:none; font-size:10;">
+    readers
+  </text>
+  <text x="505" y="185" style="fill:black; stroke:none; font-size:10;">
+    Hash
+  </text>
+  <text x="417" y="170" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <text x="614" y="170" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="128" y1="232" x2="79" y2="232" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="82" y="228" style="fill:black; stroke:none; font-size:10;">
+    copies
+  </text>
+  <text x="79" y="243" style="fill:black; stroke:none; font-size:10;">
+    Aggreg2
+  </text>
+  <line x1="381" y1="232" x2="374" y2="232" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="353" y="228" style="fill:black; stroke:none; font-size:10;">
+    authors
+  </text>
+  <text x="363" y="243" style="fill:black; stroke:none; font-size:10;">
+    Hash
+  </text>
+  <line x1="355" y1="232" x2="160" y2="232" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="240" y="228" style="fill:black; stroke:none; font-size:10;">
+    books
+  </text>
+  <text x="243" y="243" style="fill:black; stroke:none; font-size:10;">
+    Hash
+  </text>
+  <line x1="79" y1="232" x2="79" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="83" y="198" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="355" y1="232" x2="355" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="359" y="198" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="381" y1="232" x2="381" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="385" y="198" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="128" y1="232" x2="128" y2="277" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="132" y="273" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="160" y1="232" x2="160" y2="277" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="160" y1="277" x2="156" y2="270" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="160" y1="277" x2="164" y2="270" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="164" y="273" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="374" y1="232" x2="374" y2="277" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="374" y1="277" x2="370" y2="270" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="374" y1="277" x2="378" y2="270" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="378" y="273" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="105" y="277" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="112" y="294" style="fill:black; stroke:none; font-size:12;">
+    Book
+  </text>
+  <rect x="332" y="277" width="78" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="339" y="294" style="fill:black; stroke:none; font-size:12;">
+    Author
+  </text>
+  <line x1="186" y1="290" x2="329" y2="290" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="226" y="286" style="fill:black; stroke:none; font-size:10;">
+    bksOfAuth
+  </text>
+  <text x="219" y="301" style="fill:black; stroke:none; font-size:10;">
+    ManyToManyX
+  </text>
+  <text x="190" y="286" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <text x="318" y="286" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+</svg>

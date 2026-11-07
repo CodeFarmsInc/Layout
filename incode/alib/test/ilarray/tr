@@ -1,0 +1,6 @@
+#!/bin/sh
+./clean
+../../codegen -dol ds.def ../../lib gen
+g++ ilarray.cpp
+./a.out > ilarray.res
+../diff ilarray.res ilarray.out

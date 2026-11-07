@@ -1,0 +1,40 @@
+// THE NEXT VERSION:
+// Node is the box representing a class.
+// Edge is the horizontal line segment which represents the relation.
+// PartRef is the reference to the participating class.
+// Edge has 2 or more PartRefs where one of them may be the Relation (shown
+// as a dashed line in the UML diagram). The first of the remaining
+// participants is the 'source', the remaining participants are 'targets'.
+
+Association SingleLink<Pair,Node> inPair1;
+Association SingleLink<Pair,Node> inPair2;
+Association LinkedList1<Layout,Pair> pairs;
+Association LinkedList1<Layout,Group> groups;
+Association LinkedList1<Layout,Node> nodes;
+Association LinkedList1<Layout,Edge> edges;
+Association SingleLink<Node,Group> myGroup;
+Association LinkedList1<Node,Member> members;
+Association Name<Member> memberName;
+Association LinkArray<Layout,Node> newLayerArr;
+Association IndexedLinkArray<Layout,Node> ndIndex;
+Association Ring1<Node> sameLayer;
+
+Association Name<Node> nodeName;
+Association SingleLink<Node,Edge> trace;
+Association SingleLink<Node,Node> firstTo;
+Association Name<Edge> edgeType;
+Association Name<Edge> edgeID;
+Association Name<Edge> edgeCode;
+Association Aggregate2<Node,Edge> sources; // edges where this Node is a source
+Association Aggregate2<Node,Edge> targets; // edges where this Node is a target
+
+Association IndexedLinkArray<Layout,Track> trackArr;
+Association Aggregate2<Track,Edge> byTrack;
+Association SingleLink<Layout,Node> root;
+Association Name<Layout> title;
+Association LinkArray<Layout,Edge> selectArr; // temporary, fix-sized array
+
+Association Aggregate2<Layout,Net> nets;
+Association Aggregate2<Net,Edge> byNet;
+Association SingleLink<Net,Node> netRelation;
+Association SingleLink<Net,Node> netSource;

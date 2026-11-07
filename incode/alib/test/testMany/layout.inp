@@ -1,0 +1,5 @@
+R*1* 1XtoX Mark Student marks ;
+R*2* 2XtoX Takes Student Course takes ;
+R*3* 3XtoX Took Student Course Year byYear ;
+Name Student sName ;
+Name Course cName ;

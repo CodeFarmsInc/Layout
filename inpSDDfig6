@@ -1,0 +1,7 @@
+u1-* list Faculty Student students ;
+u1-* list Faculty Department departments ;
+u1-* list Department Teacher teachers ;
+b1-* listB Teacher Student mentoring ;
+b1-* listB Student Record myRecords ;
+b1-* listB Course Record records ;
+b1-* listB Teacher Course teaches ;

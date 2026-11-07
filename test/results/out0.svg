@@ -1,0 +1,81 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd"
+><svg xmlns="http://www.w3.org/2000/svg">
+  <title>(null)</title>
+  <desc>Automatically generated UML diagram</desc>
+  <rect x="270" y="45" width="114" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="277" y="62" style="fill:black; stroke:none; font-size:12;">
+    Layout
+  </text>
+  <line x1="295" y1="116" x2="97" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="179" y="112" style="fill:black; stroke:none; font-size:10;">
+    edges
+  </text>
+  <text x="158" y="127" style="fill:black; stroke:none; font-size:10;">
+    LinkedList1
+  </text>
+  <line x1="357" y1="116" x2="557" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="440" y="112" style="fill:black; stroke:none; font-size:10;">
+    nodes
+  </text>
+  <text x="419" y="127" style="fill:black; stroke:none; font-size:10;">
+    LinkedList1
+  </text>
+  <line x1="329" y1="116" x2="324" y2="116" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="312" y="112" style="fill:black; stroke:none; font-size:10;">
+    nets
+  </text>
+  <text x="291" y="127" style="fill:black; stroke:none; font-size:10;">
+    Aggregate2
+  </text>
+  <line x1="295" y1="116" x2="295" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="299" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="329" y1="116" x2="329" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="333" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="357" y1="116" x2="357" y2="71" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="361" y="82" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="97" y1="116" x2="97" y2="161" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="97" y1="161" x2="93" y2="154" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="97" y1="161" x2="101" y2="154" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="101" y="157" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="324" y1="116" x2="324" y2="161" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="328" y="157" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="557" y1="116" x2="557" y2="161" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="557" y1="161" x2="553" y2="154" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="557" y1="161" x2="561" y2="154" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="561" y="157" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <rect x="37" y="161" width="114" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="44" y="178" style="fill:black; stroke:none; font-size:12;">
+    Edge
+  </text>
+  <rect x="270" y="161" width="114" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="277" y="178" style="fill:black; stroke:none; font-size:12;">
+    Net
+  </text>
+  <rect x="503" y="161" width="114" height="26" fill="#ffffff" stroke="black" stroke-width="2"/>
+  <text x="510" y="178" style="fill:black; stroke:none; font-size:12;">
+    Node
+  </text>
+  <line x1="267" y1="174" x2="154" y2="174" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="154" y1="174" x2="160" y2="170" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="154" y1="174" x2="160" y2="178" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="193" y="170" style="fill:black; stroke:none; font-size:10;">
+    byNet
+  </text>
+  <text x="175" y="185" style="fill:black; stroke:none; font-size:10;">
+    Aggregate2
+  </text>
+  <text x="256" y="170" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <text x="158" y="170" style="fill:black; stroke:none; font-size:10;">
+    *
+  </text>
+  <line x1="544" y1="232" x2="576" y2="232" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="536" y="228" style="fill:black; stroke:none; font-size:10;">
+    firstTo
+  </text>
+  <text x="525" y="243" style="fill:black; stroke:none; font-size:10;">
+    SingleLink
+  </text>
+  <line x1="544" y1="232" x2="544" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="548" y="198" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+  <line x1="576" y1="232" x2="576" y2="187" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="576" y1="187" x2="580" y2="193" style="stroke:rgb(99,99,99);stroke-width:2" />  <line x1="576" y1="187" x2="572" y2="193" style="stroke:rgb(99,99,99);stroke-width:2" />  <text x="580" y="198" style="fill:black; stroke:none; font-size:10;">
+    1
+  </text>
+</svg>

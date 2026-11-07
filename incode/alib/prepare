@@ -1,0 +1,42 @@
+#!/bin/sh
+rm tmp/*.h
+rm tmp/*.cpp
+./replace lib/ring2 tmp/orgs orgs Organization
+./replace lib/llist2 tmp/orgs1 orgs Generator Organization
+./replace lib/ring2 tmp/parts parts Participant
+./replace lib/llist2 tmp/parts1 parts Organization Participant
+./replace lib/aggreg2 tmp/parts2 parts Organization Participant
+./replace lib/name tmp/orgName orgName Organization
+./replace lib/name tmp/partName partName Participant
+
+./replace lib/ring2 tmp/types types OrgType
+./replace lib/llist2 tmp/types1 types Generator OrgType
+./replace lib/ring2 tmp/partTypes partTypes PartType
+./replace lib/llist2 tmp/partTypes1 partTypes OrgType PartType
+./replace lib/aggreg2 tmp/partTypes2 partTypes OrgType PartType
+./replace lib/singlink tmp/inherits inherits OrgType OrgType
+./replace lib/singlink tmp/inhMatch inhMatch PartType PartType
+./replace lib/singlink tmp/inhFixed inhFixed FixedType PartType 
+./replace lib/ring1 tmp/fixedTypes fixedTypes FixedType
+./replace lib/llist1 tmp/fixedTypes1 fixedTypes OrgType FixedType
+./replace lib/name tmp/inhName inhName PartType
+./replace lib/name tmp/fixedName fixedName FixedType
+./replace lib/ring1 tmp/iters iters Iterator
+./replace lib/llist1 tmp/iters1 iters OrgType Iterator
+./replace lib/name tmp/orgTypeName orgTypeName OrgType
+./replace lib/name tmp/fileName fileName OrgType
+./replace lib/name tmp/partTypeName partTypeName PartType
+./replace lib/name tmp/itername iterName Iterator
+
+./replace lib/singlink tmp/myType myType Organization OrgType
+./replace lib/singlink tmp/myPartType myPartType Participant PartType
+
+./replace lib/singlink tmp/toBase toBase ClassLink ApplClass
+./replace lib/ring1 tmp/dependsOn dependsOn ClassLink
+./replace lib/llist1 tmp/dependsOn1 dependsOn ApplClass ClassLink
+./replace lib/ring2 tmp/usedBy usedBy Participant
+./replace lib/llist2 tmp/usedBy1 usedBy ApplClass Participant
+./replace lib/aggreg2 tmp/usedBy2 usedBy ApplClass Participant
+./replace lib/name tmp/cName cName ApplClass
+./replace lib/array tmp/classes classes Generator void*
+./replace lib/hash tmp/classes1 classes Generator ApplClass

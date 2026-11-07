@@ -1,0 +1,1 @@
+- (id) init{ tail=nxt=NULL; dir=0; return self;}

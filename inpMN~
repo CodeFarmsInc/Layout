@@ -1,0 +1,2 @@
+b1-* DOUBLE_AGGREGATE S A agg ;
+r*2* M_TO_N R A B mton ;

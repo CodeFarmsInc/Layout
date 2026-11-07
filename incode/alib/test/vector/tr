@@ -1,0 +1,6 @@
+#!/bin/sh
+./clean
+../../codegen ds.def ../../lib gen
+g++ -GX vector.cpp
+./a.out > vector.res
+../diff vector.res vector.out

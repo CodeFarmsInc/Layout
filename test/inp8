@@ -1,0 +1,5 @@
+Inherits Picture Graphics Editable ;
+Inherits Line Graphics ;
+Inherits Text Editable Graphics ;
+Inherits Rectangle Graphics ;
+Inherits Picture Line ;

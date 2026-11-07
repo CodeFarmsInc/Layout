@@ -1,0 +1,8 @@
+
+DataStructure Ring1<Employee> eRing;
+DataStructure Name<Employee> eName;
+DataStructure SingleLink<Header,Employee>  rStart;
+DataStructure BinaryHeap<Header,Employee*> pHeap;
+DataStructure BinaryHeap<Header,Employee>  eHeap;
+DataStructure BinaryHeap<Header,PtrEmpl>   hHeap;
+DataStructure SingleLink<PtrEmpl,Employee> hPtr;

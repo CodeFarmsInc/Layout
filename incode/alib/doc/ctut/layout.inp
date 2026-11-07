@@ -1,0 +1,10 @@
+u1-* Bag Assembly PartType assemble ;
+u1-* LinkedList1 Company Supplier suppliers ;
+b1-* Aggregate2 Supplier PartType supply ;
+u1-* Hash Company PartType partHash ;
+u1-* LinkedList1 Company Warehouse warehouses ;
+u1-* LinkedList1 Company Product products ;
+b1-* Aggregate2 Warehouse PartType stored ;
+Name Product prodName ;
+Inherits Assembly PartType ;
+Inherits Product Assembly ;

@@ -1,0 +1,17 @@
+u1-* LinkedList2 Library CD cds ;
+u1-* LinkedList2 Library Composer composers ;
+u1-* LinkedList2 Library Performer performers ;
+R*2* M_TO_N Link Track Performer playedBy ;
+b1-* Aggregate2 CD Track tracks ;
+b1-* Aggregate2 Composer Work works ;
+b1-* Aggregate2 Work Part parts ;
+b1-1 Aggregate2 Part Track onTrack ;
+
+Association Aggregate<Faculty,Department>  departments;
+Association Aggregate<Department,Teacher>  teachers;
+Association Aggregate<Department,Course>  courses;
+Association Aggregate<Teacher,Course>  teaches;
+:w!inpWeb1
+
+	:w!webInp1
+
